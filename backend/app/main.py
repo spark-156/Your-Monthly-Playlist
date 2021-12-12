@@ -63,14 +63,16 @@ def auth_callback(
                 value=data['access_token'],
                 max_age=data['expires_in'],
                 httponly=True,
-                secure=True
+                secure=True,
+                samesite="Strict"
             )
             response.set_cookie(
                 key='refresh_token',
                 value=data['refresh_token'],
                 max_age=2147483647,
                 httponly=True,
-                secure=True
+                secure=True,
+                samesite="Strict"
             )
             return '/'
         else:
