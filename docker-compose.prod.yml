@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  frontend-prod:
+    container_name: frontend-prod
+    image: frontend-prod
+    build:
+      context: ./frontend
+      target: production
+    ports:
+      - 80:80

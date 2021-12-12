@@ -1,0 +1,30 @@
+{
+    "folders": [
+      {
+        "path": ".",
+        "name": "{Root}"
+      },
+      {
+        "path": "frontend/",
+        "name": "{MS} Frontend"
+      },
+      {
+        "path": "backend/",
+        "name": "{MS} Backend"
+      }
+    ],
+    "settings": {
+      "git.ignoreLimitWarning": true,
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+      "editor.formatOnSave": true,
+      "eslint.format.enable": true,
+      "eslint.codeActionsOnSave.mode": "all",
+      "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+      },
+      "[javascriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+      }
+    }
+  }
+  
