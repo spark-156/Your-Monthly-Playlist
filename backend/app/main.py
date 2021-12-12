@@ -48,7 +48,7 @@ def auth_callback(
 
     if code:
         message = config.client_id + ':' + config.client_secret
-        r = requests.post('https://accounts.spotify.com/api/token', data={
+        request_response = requests.post('https://accounts.spotify.com/api/token', data={
             'grant_type': 'authorization_code',
             'code': code,
             'redirect_uri': config.redirect_uri
@@ -56,10 +56,22 @@ def auth_callback(
             'Authorization': 'Basic ' + base64.b64encode(message.encode('ascii')).decode('ascii'),
             'Content-Type': 'application/x-www-form-urlencoded'
         })
-        data = r.json()
+        data = request_response.json()
         if 'access_token' in data and 'refresh_token' in data:
-            response.set_cookie(key='access_token', value=data['access_token'], max_age=data['expires_in'], httponly=True, secure=True)
-            response.set_cookie(key='refresh_token', value=data['refresh_token'], max_age=2147483647, httponly=True, secure=True)
+            response.set_cookie(
+                key='access_token',
+                value=data['access_token'],
+                max_age=data['expires_in'],
+                httponly=True,
+                secure=True
+            )
+            response.set_cookie(
+                key='refresh_token',
+                value=data['refresh_token'],
+                max_age=2147483647,
+                httponly=True,
+                secure=True
+            )
             return '/'
         else:
             return '/error'
