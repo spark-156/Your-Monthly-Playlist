@@ -19,12 +19,8 @@
       "editor.formatOnSave": true,
       "eslint.format.enable": true,
       "eslint.codeActionsOnSave.mode": "all",
-      "[javascript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-      },
-      "[javascriptreact]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-      }
+      "python.linting.pylintEnabled": true,
+      "python.linting.enabled": true
     }
   }
   
