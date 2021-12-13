@@ -37,10 +37,21 @@ services:
     environment:
       - CLIENT_ID=
       - CLIENT_SECRET=
-      - REDIRECT_URI=
+      - REDIRECT_URI=http://localhost/api/v1/callback
     labels: 
       traefik.enable: true
       traefik.http.routers.backend.rule: Host(`localhost`) && PathPrefix(`/api/v1`)
       traefik.http.services.backend.loadbalancer.server.port: 80
       traefik.http.middlewares.backendpathstrip.stripprefix.prefixes: /api/v1
       traefik.http.routers.backend.middlewares: backendpathstrip@docker
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: spotify
+      POSTGRES_PASSWORD: 
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
