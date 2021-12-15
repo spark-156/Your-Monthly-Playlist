@@ -5,7 +5,7 @@ from random import choice
 from string import ascii_uppercase
 from urllib.parse import urlencode, quote_plus
 
-from fastapi import FastAPI, Response, Cookie
+from fastapi import FastAPI, Response, Cookie, Header
 from fastapi.responses import RedirectResponse
 import requests
 
@@ -76,3 +76,29 @@ def auth_callback(
             return '/'
         else:
             return '/error'
+
+@app.get('/refresh', response_class=RedirectResponse)
+def auth_refresh(response: Response, referer: Optional[str] = Header(None), refresh_token: Optional[str] = Cookie(None)):
+    if refresh_token:
+        message = config.client_id + ':' + config.client_secret
+        request_response = requests.post('https://accounts.spotify.com/api/token', data={
+            'grant_type': 'refresh_token',
+            'refresh_token': refresh_token
+        }, headers={
+            'Authorization': 'Basic ' + base64.b64encode(message.encode('ascii')).decode('ascii'),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        })
+        data = request_response.json()
+        response.set_cookie(
+                key='access_token',
+                value=data['access_token'],
+                max_age=data['expires_in'],
+                secure=True,
+                samesite="Strict"
+            )
+        if referer:
+            return referer
+        else:
+            return '/'
+    else:
+        return '/api/v1/login'

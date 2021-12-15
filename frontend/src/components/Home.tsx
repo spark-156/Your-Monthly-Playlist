@@ -4,7 +4,6 @@ import { Colors } from "../lib/constants";
 import { Button } from "./Button";
 
 export function Home() {
-  console.log(document.cookie)
   useEffect(() => {
     async function getUser() {
       const response = await axiosSpotifyInstance.get("/me");

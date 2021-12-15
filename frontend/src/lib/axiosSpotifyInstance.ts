@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { PassThrough } from "stream";
 import { getCookie } from "./getCookie";
 
 const axiosSpotifyInstance = axios.create({
@@ -9,19 +10,19 @@ const axiosSpotifyInstance = axios.create({
   }
 });
 
-axiosSpotifyInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-  if (config.headers?.Authorization === 'Bearer ') { // access token expired
-    console.error("access_token expired")
-  }
+axiosSpotifyInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
+  if (!getCookie("access_token")) { // access token expired
+    window.location.href = '/api/v1/refresh'
+  } 
   return config
 })
 
 axiosSpotifyInstance.interceptors.response.use((response: AxiosResponse) => {
   if (response.status === 401) {
     window.location.href = "/api/v1/login"
+  } else if (response.status === 307) {
+      console.log("redirecting")
   }
-
-  console.log('response:', response.status)
 
   return response
 })
