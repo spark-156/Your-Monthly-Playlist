@@ -7,7 +7,6 @@ from urllib.parse import urlencode, quote_plus
 
 from fastapi import FastAPI, Response, Cookie
 from fastapi.responses import RedirectResponse
-
 import requests
 
 from . import config
@@ -23,7 +22,7 @@ def login(response: Response):
     return 'https://accounts.spotify.com/authorize?' + urlencode({
         'response_type': 'code',
         'client_id': config.client_id,
-        'scope': config.scope,
+        'scope': config.access_scope,
         'redirect_uri': config.redirect_uri,
         'state': state,
     }, quote_via=quote_plus)
@@ -57,12 +56,12 @@ def auth_callback(
             'Content-Type': 'application/x-www-form-urlencoded'
         })
         data = request_response.json()
+
         if 'access_token' in data and 'refresh_token' in data:
             response.set_cookie(
                 key='access_token',
                 value=data['access_token'],
                 max_age=data['expires_in'],
-                httponly=True,
                 secure=True,
                 samesite="Strict"
             )
