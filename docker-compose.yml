@@ -44,14 +44,3 @@ services:
       traefik.http.services.backend.loadbalancer.server.port: 80
       traefik.http.middlewares.backendpathstrip.stripprefix.prefixes: /api/v1
       traefik.http.routers.backend.middlewares: backendpathstrip@docker
-
-  postgres:
-    image: postgres
-    environment:
-      POSTGRES_USER: spotify
-      POSTGRES_PASSWORD: 
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata:
