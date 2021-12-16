@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { PassThrough } from "stream";
 import { getCookie } from "./getCookie";
 
 const axiosSpotifyInstance = axios.create({
