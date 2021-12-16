@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla&family=Playfair+Display&display=swap');
 
-body {
+body, html {
   margin: 0;
+  padding: 0;
+  background-color: #191414;
   font-family: 'Karla', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -10,4 +12,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+  box-sizing: border-box;
 }
