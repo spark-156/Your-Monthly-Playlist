@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { getCookie } from './getCookie'
 
 const axiosSpotifyInstance = axios.create({
@@ -19,14 +19,22 @@ axiosSpotifyInstance.interceptors.request.use(async (config: AxiosRequestConfig)
 axiosSpotifyInstance.interceptors.response.use(async (response: AxiosResponse) => {
   if (response.status === 401) {
     window.location.href = '/api/v1/login'
-  } else if (response.status === 429) {
-    console.log('rate limited please be patient for ' + response.headers['Retry-After'] + ' seconds.')
-    // eslint-disable-next-line promise/param-names
-    await new Promise(r => setTimeout(r, Number(response.headers['Retry-After'])))
-    return axiosSpotifyInstance.request(response.config)
   }
 
   return response
+}, async (error: AxiosError) => {
+  if (error.response?.status === 429) {
+    if (error.response.headers['retry-after']) {
+      console.log('rate limited please be patient for ' + error.response.headers['retry-after'] + ' seconds.')
+      // eslint-disable-next-line promise/param-names
+      await new Promise(r => setTimeout(r, Number(error.response?.headers['retry-after'])))
+    } else {
+      console.log('rate limited for an undefined amount of time. Please be patient for 5 seconds')
+      // eslint-disable-next-line promise/param-names
+      await new Promise(r => setTimeout(r, 5))
+    }
+    return axiosSpotifyInstance.request(error.response.config)
+  }
 })
 
 export { axiosSpotifyInstance }
