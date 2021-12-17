@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 enum Colors {
   Black = '#191414',
   White = '#ffffff',
