@@ -16,11 +16,14 @@ axiosSpotifyInstance.interceptors.request.use(async (config: AxiosRequestConfig)
   return config
 })
 
-axiosSpotifyInstance.interceptors.response.use((response: AxiosResponse) => {
+axiosSpotifyInstance.interceptors.response.use(async (response: AxiosResponse) => {
   if (response.status === 401) {
     window.location.href = '/api/v1/login'
-  } else if (response.status === 307) {
-    console.log('redirecting')
+  } else if (response.status === 429) {
+    console.log('rate limited please be patient for ' + response.headers['Retry-After'] + ' seconds.')
+    // eslint-disable-next-line promise/param-names
+    await new Promise(r => setTimeout(r, Number(response.headers['Retry-After'])))
+    return axiosSpotifyInstance.request(response.config)
   }
 
   return response
