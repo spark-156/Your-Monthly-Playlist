@@ -1,5 +1,7 @@
 import React from 'react'
-import { Colors } from '../lib/constants'
+import classNames from 'classnames'
+
+import styles from '../styles/Container.module.css'
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   maxWidth?: string,
@@ -8,15 +10,16 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Container ({ children, maxWidth = '1000px', alignSelfCenter = false, disablePadding = false, ...props }: ContainerProps) {
-  return <div style={{
-    backgroundColor: Colors.Black,
-    color: Colors.White,
-    padding: disablePadding ? undefined : '15px',
-    width: '100%',
-    height: '100%',
-    maxWidth: maxWidth,
-    margin: alignSelfCenter ? '0 auto' : undefined
-  }} {...props}>
+  return <div className={classNames({
+    [styles.container]: true,
+    [styles.alignSelfCenter]: alignSelfCenter,
+    [styles.disablePadding]: disablePadding
+  })}
+  style={{
+    maxWidth: maxWidth
+  }}
+  {...props}
+  >
     {children}
   </div>
 }
