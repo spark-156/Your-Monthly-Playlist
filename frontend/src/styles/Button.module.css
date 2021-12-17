@@ -6,4 +6,9 @@
   background-color: var(--ldb-colors-green);
   color: var(--ldb-colors-white);
   font-family: var(--ldb-fonts-default);
+  font-size: var(--ldb-lengths-1X);
+}
+
+.button:hover {
+  cursor: pointer;
 }

@@ -9,8 +9,9 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   disablePadding?: boolean,
 }
 
-export function Container ({ children, maxWidth = '1000px', alignSelfCenter = false, disablePadding = false, ...props }: ContainerProps) {
+export function Container ({ children, className, maxWidth, alignSelfCenter = false, disablePadding = false, ...props }: ContainerProps) {
   return <div className={classNames({
+    className,
     [styles.container]: true,
     [styles.alignSelfCenter]: alignSelfCenter,
     [styles.disablePadding]: disablePadding
