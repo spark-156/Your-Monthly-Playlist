@@ -1,5 +1,6 @@
 import React from 'react'
-import { Colors, Fonts } from '../lib/constants'
+
+import styles from '../styles/TextDiv.module.css'
 
 interface TextDivProps extends React.HTMLAttributes<HTMLDivElement> {
   fontSize?: string,
@@ -7,10 +8,8 @@ interface TextDivProps extends React.HTMLAttributes<HTMLDivElement> {
   maxWidth?: string,
 }
 
-export function TextDiv ({ children, fontSize = '16px', textAlign = 'left', maxWidth = '100%', ...props }: TextDivProps) {
-  return <div style={{
-    color: Colors.White,
-    fontFamily: Fonts.Default,
+export function TextDiv ({ children, fontSize, textAlign, maxWidth, ...props }: TextDivProps) {
+  return <div className={styles.textDiv} style={{
     fontSize: fontSize,
     textAlign: textAlign,
     maxWidth: maxWidth

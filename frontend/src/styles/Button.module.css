@@ -1,0 +1,9 @@
+.button {
+  width: 200px;
+  height: 50px;
+  border-radius: 25px;
+  border: none;
+  background-color: var(--ldb-colors-green);
+  color: var(--ldb-colors-white);
+  font-family: var(--ldb-fonts-default);
+}

@@ -1,0 +1,7 @@
+.titleDiv {
+  color: var(--ldb-colors-white);
+  font-family: var(--ldb-fonts-title);
+  text-align: left;
+  width: 100%;
+  font-size: var(--ldb-lengths-2X);
+}

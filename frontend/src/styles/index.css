@@ -1,13 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla&family=Playfair+Display&display=swap');
 
 :root {
-  --ldb-colors-black: '#191414';
-  --ldb-colors-white: '#ffffff';
-  --ldb-colors-bellow: '#FAFF81';
-  --ldb-colors-blue: '#75DDDD';
-  --ldb-colors-green: '#1DB954';
+  --ldb-colors-black: #191414;
+  --ldb-colors-white: #ffffff;
+  --ldb-colors-bellow: #FAFF81;
+  --ldb-colors-blue: #75DDDD;
+  --ldb-colors-green: #1DB954;
+  
   --ldb-fonts-default: 'Karla';
   --ldb-fonts-title: 'Playfair Display';
+
+  --ldb-lengths-half: 8px;
+  --ldb-lengths-1X: 16px;
+  --ldb-lengths-default: var(--ldb-lengths-1X);
+  --ldb-lengths-2X: 32px;
+  --ldb-lengths-60X: 960px;
 }
 
 body, html {

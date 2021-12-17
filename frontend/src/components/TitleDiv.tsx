@@ -1,15 +1,14 @@
 import React from 'react'
-import { Colors, Fonts } from '../lib/constants'
+
+import styles from '../styles/TitleDiv.module.css'
 
 interface TitleDivProps extends React.HTMLAttributes<HTMLDivElement> {
   fontSize?: string,
   textAlign?: 'left' | 'center' | 'right',
 }
 
-export function TitleDiv ({ children, fontSize = '30px', textAlign = 'left', ...props }: TitleDivProps) {
-  return <div style={{
-    color: Colors.White,
-    fontFamily: Fonts.Title,
+export function TitleDiv ({ children, fontSize, textAlign, ...props }: TitleDivProps) {
+  return <div className={styles.titleDiv} style={{
     fontSize: fontSize,
     textAlign: textAlign
   }} {...props}>
