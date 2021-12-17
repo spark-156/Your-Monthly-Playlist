@@ -66,6 +66,13 @@ def auth_callback(
                 samesite="Strict"
             )
             response.set_cookie(
+                key='has_refresh_token',
+                value=1,
+                max_age=2147483647,
+                secure=True,
+                samesite="Strict"
+            )
+            response.set_cookie(
                 key='refresh_token',
                 value=data['refresh_token'],
                 max_age=2147483647,
@@ -73,7 +80,7 @@ def auth_callback(
                 secure=True,
                 samesite="Strict"
             )
-            return '/'
+            return '/dashboard'
         else:
             return '/error'
 
@@ -99,6 +106,6 @@ def auth_refresh(response: Response, referer: Optional[str] = Header(None), refr
         if referer:
             return referer
         else:
-            return '/'
+            return '/dashboard'
     else:
         return '/api/v1/login'

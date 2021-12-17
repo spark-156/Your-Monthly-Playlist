@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Button } from '../components/Button'
 import { Container } from '../components/Container'
 import { TextDiv } from '../components/TextDiv'
+import { getCookie } from '../lib/getCookie'
 
 export function Home () {
+  useEffect(() => {
+    if (getCookie('has_refresh_token')) {
+      window.location.href = '/dashboard'
+    }
+  })
   return <Container maxWidth="100%" disablePadding>
     <Container className='align-center' disablePadding maxWidth="500px">
       <img src='/dancingman.gif' style={{ width: 'inherit', height: 'auto' }} />
