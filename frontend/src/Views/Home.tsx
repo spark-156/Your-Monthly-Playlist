@@ -3,11 +3,9 @@ import React from 'react'
 import { Button } from '../components/Button'
 import { Container } from '../components/Container'
 import { TextDiv } from '../components/TextDiv'
-import { TitleDiv } from '../components/TitleDiv'
 
 export function Home () {
-  return <Container maxWidth="100%">
-      <TitleDiv textAlign="left" >your spotify monthly</TitleDiv>
+  return <Container maxWidth="100%" disablePadding>
     <Container className='align-center' disablePadding maxWidth="500px">
       <img src='/dancingman.gif' style={{ width: 'inherit', height: 'auto' }} />
       <TextDiv maxWidth="250px">see what songs you added to your evergrowing spotify collection</TextDiv>
