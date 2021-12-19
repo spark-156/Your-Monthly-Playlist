@@ -1,25 +1,19 @@
 /* eslint-disable no-unused-vars */
-export type Tracks = {
-  'href': string;
-  'items': PlaylistItem[]
-  'limit': number;
-  'next'?: string;
-  'offset': 0;
-  'previous': string;
-  'total': 4;
-};
+export interface TrimmedItem extends Pick<Item, 'added_at'> {
+  track: Pick<Track, 'href' | 'name' | 'previewURL' | 'id' | 'uri'>
+}
 export interface PlaylistItem {
   href: string;
   items: Item[];
   limit: number;
-  next: string;
+  next?: string | null;
   offset: number;
-  previous: null;
+  previous?: string | null;
   total: number;
 }
 
 export interface Item {
-  addedAt: Date;
+  added_at: Date;
   track: Track;
 }
 
