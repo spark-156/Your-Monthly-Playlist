@@ -13,7 +13,7 @@ export interface PlaylistItem {
 }
 
 export interface Item {
-  added_at: Date;
+  added_at: string;
   track: Track;
 }
 

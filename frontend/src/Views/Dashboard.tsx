@@ -11,17 +11,34 @@ import { DateTime } from 'luxon'
 
 export function Dashboard () {
   const [me, setMe] = useState<Me>()
-  const [tracks, setTracks] = useState<Item[]>([])
+  const [tracks, setTracks] = useState<{ [key: string]: Item[]}>({})
   const [loading, setLoading] = useState<boolean>(true)
+  const [months, setMonths] = useState<string[]>([])
 
   const currentDateTime = DateTime.now()
+
+  function addTracks (items: Item[]): void {
+    setTracks(prevState => {
+      items.forEach(item => {
+        const itemDate = DateTime.fromISO(item.added_at)
+        const itemDateString = `${itemDate.monthLong} ${itemDate.year}`
+        if (prevState[itemDateString]) {
+          prevState[itemDateString] = [item, ...prevState[itemDateString]]
+        } else {
+          prevState[itemDateString] = [item]
+        }
+      })
+      setMonths(Object.keys(prevState))
+      return prevState
+    })
+  }
 
   useEffect(() => {
     async function getData () {
       try {
         const me = await axiosSpotifyInstance.get<Me>('/me')
         setMe(me.data)
-        setTracks(await getSavedTracks(tracks => setTracks((prevState) => [...prevState, ...tracks])))
+        await getSavedTracks(addTracks)
         setLoading(false)
       } catch (err: any) {
         if (axios.isAxiosError(err)) {
@@ -37,12 +54,13 @@ export function Dashboard () {
 
   useEffect(() => {
     console.log({ me, tracks })
+    let count = 0
+    Object.keys(tracks).forEach(key => { count += tracks[key].length })
+    console.log(Object.keys(tracks), count)
   }, [me, tracks])
-
-  if (loading) return <Container maxWidth="100%" disablePadding><TitleDiv>Loading...</TitleDiv></Container>
 
   return <Container maxWidth="100%" disablePadding>
     <TitleDiv>{me?.display_name}</TitleDiv>
-
+    {months.map(key => <TitleDiv key={key} >{key}</TitleDiv>)}
   </Container>
 }

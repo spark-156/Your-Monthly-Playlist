@@ -37,8 +37,6 @@ export async function getSavedTracks (addTracks: (tracks: Item[]) => void) {
       items = [...items, ...response.data.items]
       addTracks(response.data.items)
     }
-    // window.localStorage.setItem('items', JSON.stringify(trimItem(items)))
-    // window.localStorage.setItem('lastItemsRefresh', DateTime.now().toISO())
     return items
   } catch (err: any) {
     if (axios.isAxiosError(err)) {
