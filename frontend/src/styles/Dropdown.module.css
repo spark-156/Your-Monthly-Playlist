@@ -1,0 +1,20 @@
+.dropdown {
+  display: grid;
+  grid-template-areas: 
+    "date button";
+  grid-template-columns: 1fr auto;
+}
+
+.arrowButton { 
+  grid-area: button;
+  justify-self: end;
+}
+
+.date {
+  grid-area: date;
+  justify-self: start;
+}
+
+.content {
+  
+}

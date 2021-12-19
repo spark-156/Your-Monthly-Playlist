@@ -8,6 +8,7 @@ import { Item } from '../types/tracksType'
 import { Me } from '../types/meType'
 import { getSavedTracks } from '../lib/getAllSavedTracks'
 import { DateTime } from 'luxon'
+import { Dropdown } from '../components/Dropdown'
 
 export function Dashboard () {
   const [me, setMe] = useState<Me>()
@@ -61,6 +62,6 @@ export function Dashboard () {
 
   return <Container maxWidth="100%" disablePadding>
     <TitleDiv>{me?.display_name}</TitleDiv>
-    {months.map(key => <TitleDiv key={key} >{key}</TitleDiv>)}
+    {months.map(key => <Dropdown key={key} date={key} items={tracks[key]} />)}
   </Container>
 }
