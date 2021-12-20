@@ -16,8 +16,6 @@ export function Dashboard () {
   const [loading, setLoading] = useState<boolean>(true)
   const [months, setMonths] = useState<string[]>([])
 
-  const currentDateTime = DateTime.now()
-
   function addTracks (items: Item[]): void {
     setTracks(prevState => {
       items.forEach(item => {

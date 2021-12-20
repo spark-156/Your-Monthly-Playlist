@@ -1,0 +1,35 @@
+.container {
+  display: grid;
+  height: 50px;
+  width: 100%;
+  box-sizing: content-box;
+  grid-template-areas: "image title"
+    "image artists";
+  grid-template-columns: 50px auto;
+  grid-template-rows: 30px 20px;
+  gap: none;
+}
+
+.image {
+  width: 50px;
+  height: 50px;
+}
+
+.title {
+  grid-area: title;
+  line-height: 30px;
+}
+
+.artists {
+  grid-area: artists;
+  display: flex;
+  flex-direction: row;
+}
+
+.title, .artists {
+  padding-left: var(--ldb-lengths-half);
+}
+
+.artist {
+  color: var(--ldb-colors-grey);
+}
