@@ -20,16 +20,12 @@
   line-height: 30px;
 }
 
-.artists {
-  grid-area: artists;
-  display: flex;
-  flex-direction: row;
-}
-
-.title, .artists {
-  padding-left: var(--ldb-lengths-half);
-}
-
 .artist {
+  grid-area: artists;
   color: var(--ldb-colors-grey);
+  overflow: hidden;
+}
+
+.title, .artist {
+  padding-left: var(--ldb-lengths-half);
 }
