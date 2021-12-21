@@ -4,6 +4,7 @@ import { Button } from './Button'
 import { Container } from './Container'
 import { TitleDiv } from './TitleDiv'
 import { Song } from './Song'
+import { v4 as uuidv4 } from 'uuid'
 
 import styles from '../styles/Dropdown.module.css'
 
@@ -23,8 +24,8 @@ export function Dropdown ({ date, items }: DropdownProps) {
     {showItems
       ? items.map(item => <Song
       className={styles.content}
-      key={item.track.name}
-      imageSrc={'https://www.seo-snel.nl/duckduckgo/duckduckgo.png'}
+      key={uuidv4()}
+      imageSrc={item.track.album.images[0].url}
       songTitle={item.track.name}
       artists={item.track.artists} />)
       : null}
