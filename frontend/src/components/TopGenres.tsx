@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { getArtists } from '../lib/getArtists'
-import { ArtistExpansive, GetArtists } from '../types/artistsType'
-import { Artist } from '../types/tracksType'
 import { Container } from './Container'
 import { Loading } from './Loading'
+import { TextDiv } from './TextDiv'
 import { TitleDiv } from './TitleDiv'
 
 interface TopGenresProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -12,18 +10,14 @@ interface TopGenresProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function TopGenres ({ artistsIds }: TopGenresProps) {
-  const [artists, setArtists] = useState<ArtistExpansive[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-
-  function addArtists (artists: ArtistExpansive[]) {
-    setArtists(prevState => [...prevState, ...artists])
-  }
+  const [topGenres, setTopGenres] = useState<string[]>([])
 
   useEffect(() => {
     async function get () {
       const uniqueArtistIds = artistsIds.filter(function (item, pos) { return artistsIds.indexOf(item) === pos })
 
-      const uniqueArtists = await getArtists([...uniqueArtistIds], addArtists)
+      const uniqueArtists = await getArtists([...uniqueArtistIds])
 
       console.log({ uniqueArtistIds, uniqueArtists, artistsIds })
 
@@ -39,7 +33,8 @@ export function TopGenres ({ artistsIds }: TopGenresProps) {
         genres[genre] = genres[genre] ? genres[genre] + 1 : 1
       }
 
-      console.log(genres)
+      const items: [string, number][] = Object.keys(genres).map(key => [key, genres[key]])
+      setTopGenres(items.sort((first, second) => second[1] - first[1]).slice(0, 5).map(item => item[0]))
 
       setLoading(false)
     }
@@ -50,6 +45,6 @@ export function TopGenres ({ artistsIds }: TopGenresProps) {
 
   return <Container disablePadding>
     <TitleDiv fontSize='16px'>Your top genres for this month are:</TitleDiv>
-
+    {topGenres.map((genre, index) => <TextDiv key={genre} >{index + 1}.  {genre[0].toUpperCase()}{genre.slice(1)}</TextDiv>)}
   </Container>
 }
