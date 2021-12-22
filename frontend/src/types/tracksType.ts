@@ -1,7 +1,4 @@
 /* eslint-disable no-unused-vars */
-export interface TrimmedItem extends Pick<Item, 'added_at'> {
-  track: Pick<Track, 'href' | 'name' | 'previewURL' | 'id' | 'uri'>
-}
 export interface PlaylistItem {
   href: string;
   items: Item[];
