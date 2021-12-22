@@ -61,7 +61,8 @@ export function Dashboard () {
 
   return <Container maxWidth="100%" disablePadding>
     <TitleDiv>{me?.display_name}</TitleDiv>
-    {months.map(key => <Dropdown key={key} date={key} items={tracks[key]} />)}
-    {loading ? <Loading /> : null}
+    {loading
+      ? <>{months.slice(0, -1).map(key => <Dropdown key={key} date={key} items={tracks[key]} />)}<Loading /></>
+      : months.map(key => <Dropdown key={key} date={key} items={tracks[key]} />)}
   </Container>
 }
