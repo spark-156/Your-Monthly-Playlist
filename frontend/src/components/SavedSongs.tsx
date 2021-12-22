@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Item } from '../types/tracksType'
 import { Song } from './Song'
 import { TitleDiv } from './TitleDiv'
-import { v4 as uuidv4 } from 'uuid'
 import { Container } from './Container'
 
 interface SavedSongsProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -10,12 +9,14 @@ interface SavedSongsProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function SavedSongs ({ items }: SavedSongsProps) {
+  const [savedSongs] = useState(items.filter((item, index) => items.indexOf(item) === index))
+
   return <Container disablePadding>
     <TitleDiv fontSize='16px'>Your saved songs:</TitleDiv>
-    {items.map(item => <Song
-    key={uuidv4()}
-    imageSrc={item.track.album.images[0].url}
-    songTitle={item.track.name}
-    artists={item.track.artists} />)}
+    {savedSongs.map(savedSong => <Song
+    key={savedSong.track.id}
+    imageSrc={savedSong.track.album.images[0].url}
+    songTitle={savedSong.track.name}
+    artists={savedSong.track.artists} />)}
   </Container>
 }
