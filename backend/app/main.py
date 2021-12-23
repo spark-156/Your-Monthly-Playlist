@@ -106,5 +106,4 @@ def auth_refresh(response: Response, refresh_token: Optional[str] = Cookie(None)
         response.status_code = status.HTTP_200_OK
         return response
     else:
-        response.status_code = status.HTTP_307_TEMPORARY_REDIRECT
-        return '/api/v1/login'
+        return RedirectResponse('/api/v1/login')
