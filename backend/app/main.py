@@ -7,12 +7,20 @@ from urllib.parse import urlencode, quote_plus
 
 from fastapi import FastAPI, Response, Cookie, status
 from fastapi.responses import RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
 import requests
 
 from . import config
 
 app = FastAPI(root_path="/api/v1")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=config.origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/login", response_class=RedirectResponse)
 def login(response: Response):
@@ -84,7 +92,7 @@ def auth_callback(
         else:
             return '/error'
 
-@app.get('/refresh')
+@app.get('/refresh', response_class=RedirectResponse)
 def auth_refresh(response: Response, refresh_token: Optional[str] = Cookie(None)):
     if refresh_token:
         message = config.client_id + ':' + config.client_secret
@@ -106,4 +114,4 @@ def auth_refresh(response: Response, refresh_token: Optional[str] = Cookie(None)
         response.status_code = status.HTTP_200_OK
         return response
     else:
-        return RedirectResponse('/api/v1/login')
+        return '/'

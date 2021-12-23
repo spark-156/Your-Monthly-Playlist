@@ -10,8 +10,11 @@ const axiosSpotifyInstance = axios.create({
 })
 
 axiosSpotifyInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
-  if (!getCookie('access_token')) { // access token expired
+  if (!getCookie('access_token') && getCookie('has_refresh_token')) { // access token expired
     await axios.get('/api/v1/refresh')
+  }
+  if (!getCookie('has_refresh_token')) {
+    window.location.href = '/'
   }
   return config
 })
