@@ -4,6 +4,7 @@ import { axiosSpotifyInstance } from './axiosSpotifyInstance'
 
 export async function getSavedTracks (addTracks: (tracks: Item[]) => void) {
   try {
+    // TODO get all playlists and all songs from playlists as well
     let items: Item[] = []
     let response = await axiosSpotifyInstance.get<PlaylistItem>('/me/tracks?limit=50')
     items = [...items, ...response.data.items]
