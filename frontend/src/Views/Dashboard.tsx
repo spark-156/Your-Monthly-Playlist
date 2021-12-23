@@ -1,18 +1,13 @@
-/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Container } from '../components/Container'
-import { TitleDiv } from '../components/TitleDiv'
-import { axiosSpotifyInstance } from '../lib/axiosSpotifyInstance'
 import { Item } from '../types/tracksType'
-import { Me } from '../types/meType'
 import { getSavedTracks } from '../lib/getAllSavedTracks'
 import { DateTime } from 'luxon'
 import { Dropdown } from '../components/Dropdown'
 import { Loading } from '../components/Loading'
 
 export function Dashboard () {
-  const [me, setMe] = useState<Me>()
   const [tracks, setTracks] = useState<{ [key: string]: Item[]}>({})
   const [loading, setLoading] = useState<boolean>(true)
   const [months, setMonths] = useState<string[]>([])
@@ -36,8 +31,6 @@ export function Dashboard () {
   useEffect(() => {
     async function getData () {
       try {
-        const me = await axiosSpotifyInstance.get<Me>('/me')
-        setMe(me.data)
         await getSavedTracks(addTracks)
         setLoading(false)
       } catch (err: any) {
@@ -52,15 +45,7 @@ export function Dashboard () {
     getData()
   }, [])
 
-  useEffect(() => {
-    console.log({ me, tracks })
-    let count = 0
-    Object.keys(tracks).forEach(key => { count += tracks[key].length })
-    console.log(Object.keys(tracks), count)
-  }, [me, tracks])
-
   return <Container maxWidth="100%" disablePadding>
-    <TitleDiv>{me?.display_name}</TitleDiv>
     {loading
       ? <>{months.slice(0, -1).map(key => <Dropdown key={key} date={key} items={tracks[key]} />)}<Loading /></>
       : months.map(key => <Dropdown key={key} date={key} items={tracks[key]} />)}
