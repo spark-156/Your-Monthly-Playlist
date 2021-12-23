@@ -36,7 +36,3 @@ code {
 * {
   box-sizing: border-box;
 }
-
-.align-center {
-  align-self: center;
-}

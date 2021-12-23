@@ -6,7 +6,7 @@ import { Dashboard } from './Views/Dashboard'
 import { Home } from './Views/Home'
 
 function App () {
-  return <Container maxWidth='100%'>
+  return <Container maxWidth='1000px'>
     <TitleDiv>your spotify monthly</TitleDiv>
   <BrowserRouter>
     <Routes>

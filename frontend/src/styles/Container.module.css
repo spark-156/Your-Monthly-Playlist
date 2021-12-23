@@ -2,6 +2,7 @@
   background-color: var(--ldb-colors-black);
   color: var(--ldb-colors-white);
   padding: var(--ldb-lengths-default);
+  margin: 0 auto;
   width: 100%;
   height: 100%;
   max-width: var(--ldb-lengths-60X);

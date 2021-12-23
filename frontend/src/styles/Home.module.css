@@ -1,0 +1,8 @@
+
+
+.button { 
+  position: fixed;
+  bottom: var(--ldb-lengths-1X);
+  width: calc(100% - var(--ldb-lengths-2X) );
+  max-width: inherit;
+}
