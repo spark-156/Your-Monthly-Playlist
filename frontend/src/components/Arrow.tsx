@@ -17,6 +17,8 @@ interface ArrowProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Arrow ({ direction, className }: ArrowProps) {
+  // TODO FIX left and right versions of arrow
+
   return <div
   className={classNames(styles.arrow, {
     [styles.up]: direction === DirectionEnum.Up,
