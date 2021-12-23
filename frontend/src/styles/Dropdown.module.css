@@ -3,6 +3,7 @@
   grid-template-areas: 
     "date button";
   grid-template-columns: 1fr auto;
+  cursor: pointer;
 }
 
 .arrowButton { 
