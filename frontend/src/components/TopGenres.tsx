@@ -44,7 +44,9 @@ export function TopGenres ({ artistsIds }: TopGenresProps) {
   if (loading) return <Loading />
 
   return <Container disablePadding>
-    <TitleDiv fontSize='16px'>Your top genres for this month are:</TitleDiv>
-    {topGenres.map((genre, index) => <TextDiv key={genre} >{index + 1}.  {genre[0].toUpperCase()}{genre.slice(1)}</TextDiv>)}
+    <TitleDiv fontSize='18px'>Your top genres for this month are:</TitleDiv>
+    <Container>
+      {topGenres.map((genre, index) => <TextDiv key={genre} >{index + 1}.  {genre[0].toUpperCase()}{genre.slice(1)}</TextDiv>)}
+    </Container>
   </Container>
 }

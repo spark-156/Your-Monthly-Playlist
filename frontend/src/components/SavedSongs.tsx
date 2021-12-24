@@ -12,11 +12,13 @@ export function SavedSongs ({ items }: SavedSongsProps) {
   const [savedSongs] = useState(items.filter((item, index) => items.indexOf(item) === index))
 
   return <Container disablePadding>
-    <TitleDiv fontSize='16px'>Your saved songs:</TitleDiv>
-    {savedSongs.map(savedSong => <Song
-    key={savedSong.track.id}
-    imageSrc={savedSong.track.album.images[0].url}
-    songTitle={savedSong.track.name}
-    artists={savedSong.track.artists} />)}
+    <TitleDiv fontSize='20px'>Your saved songs:</TitleDiv>
+    <Container>
+      {savedSongs.map(savedSong => <Song
+      key={savedSong.track.id}
+      imageSrc={savedSong.track.album.images[0].url}
+      songTitle={savedSong.track.name}
+      artists={savedSong.track.artists} />)}
+    </Container>
   </Container>
 }
