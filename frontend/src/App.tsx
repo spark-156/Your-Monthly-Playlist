@@ -7,7 +7,7 @@ import { Home } from './Views/Home'
 
 function App () {
   return <Container maxWidth='1000px'>
-    <TitleDiv>your spotify monthly</TitleDiv>
+    <TitleDiv>Your Spotify Monthly</TitleDiv>
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />

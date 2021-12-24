@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Karla&family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla&display=swap');
+
+@font-face {
+  font-family: 'Circular';
+  src: local('Circular'), url(../fonts/circular-std-medium-500.ttf) format('truetype');
+}
 
 :root {
   --ldb-colors-black: #191414;
@@ -9,7 +14,7 @@
   --ldb-colors-grey: #7f7f7f;
   
   --ldb-fonts-default: 'Karla';
-  --ldb-fonts-title: 'Playfair Display';
+  --ldb-fonts-title: 'Circular';
 
   --ldb-lengths-half: 8px;
   --ldb-lengths-1X: 16px;
