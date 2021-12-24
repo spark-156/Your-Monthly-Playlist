@@ -8,6 +8,7 @@ import { SavedSongs } from './SavedSongs'
 import styles from '../styles/Dropdown.module.css'
 import { Arrow, DirectionEnum } from './Arrow'
 import { DateTime } from 'luxon'
+import { Dots } from './Dots'
 
 interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   date: string,
@@ -27,9 +28,10 @@ export function Dropdown ({ date, items }: DropdownProps) {
   }, [])
 
   return <>
-    <Container disablePadding className={styles.dropdown} onClick={() => setShowItems(prevState => !prevState)}>
-      <TitleDiv className={styles.date} fontSize='24px'>{date}</TitleDiv>
-      <Arrow className={styles.arrowButton} direction={showItems ? DirectionEnum.Up : DirectionEnum.Down} />
+    <Container disablePadding className={styles.dropdown} >
+      <TitleDiv onClick={() => setShowItems(prevState => !prevState)} className={styles.date} fontSize='24px'>{date}</TitleDiv>
+      <Dots className={styles.dots} onClick={() => console.log('clicked')}/>
+      <Arrow onClick={() => setShowItems(prevState => !prevState)} className={styles.arrowButton} direction={showItems ? DirectionEnum.Up : DirectionEnum.Down} />
     </Container>
     {showItems
       ? <><TopGenres artistsIds={artistsIds} /><SavedSongs items={items}/></>

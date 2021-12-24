@@ -1,17 +1,24 @@
 .dropdown {
   display: grid;
   grid-template-areas: 
-    "date button";
-  grid-template-columns: 1fr auto;
+    "date dots arrow";
+  grid-template-columns: 1fr auto auto;
   cursor: pointer;
 }
 
 .arrowButton { 
-  grid-area: button;
-  justify-self: end;
+  grid-area: arrow;
 }
 
 .date {
   grid-area: date;
   justify-self: start;
+}
+
+.dots {
+  grid-area: dots;
+}
+
+.arrowButton, .dots {
+  justify-self: end;
 }
