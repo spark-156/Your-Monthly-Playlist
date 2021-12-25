@@ -19,8 +19,6 @@ export function TopGenres ({ artistsIds }: TopGenresProps) {
 
       const uniqueArtists = await getArtists([...uniqueArtistIds])
 
-      console.log({ uniqueArtistIds, uniqueArtists, artistsIds })
-
       const genresList: string[] = []
 
       uniqueArtistIds.forEach(id => {
