@@ -18,13 +18,13 @@
 .title {
   grid-area: title;
   line-height: 30px;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .artist {
   grid-area: artists;
   color: var(--ldb-colors-grey);
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .title, .artist {
