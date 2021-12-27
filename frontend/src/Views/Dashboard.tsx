@@ -46,8 +46,12 @@ export function Dashboard () {
   }, [])
 
   return <Container maxWidth="100%" disablePadding>
-    {loading
-      ? <>{months.slice(0, -1).map(key => <Dropdown key={key} date={key} items={tracks[key]} />)}<Loading /></>
-      : months.map(key => <Dropdown key={key} date={key} items={tracks[key]} />)}
+    {months.map((value, index, array) => {
+      if (loading && index === array.length - 1) {
+        return <Loading />
+      } else {
+        return <Dropdown key={value} date={value} items={tracks[value]} />
+      }
+    })}
   </Container>
 }
