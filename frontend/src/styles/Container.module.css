@@ -8,9 +8,17 @@
   max-width: var(--ldb-lengths-60X);
 
   display: grid;
-  grid-auto-rows: auto;
-
+  
   gap: var(--ldb-lengths-1X);
+}
+
+.columns {
+  grid-auto-flow: column;
+  overflow-x: scroll;
+}
+
+.rows {
+  grid-auto-flow: row;
 }
 
 .alignSelfCenter {

@@ -6,7 +6,7 @@ import { TopGenres } from './TopGenres'
 import { SavedSongs } from './SavedSongs'
 
 import styles from '../styles/Dropdown.module.css'
-import { Arrow, DirectionEnum } from './Arrow'
+import { Arrow, ArrowDirectionEnum } from './Arrow'
 import { DateTime } from 'luxon'
 // import { Dots } from './Dots'
 
@@ -31,7 +31,7 @@ export function Dropdown ({ date, items }: DropdownProps) {
     <Container onClick={() => setShowItems(prevState => !prevState)} disablePadding className={styles.dropdown} >
       <TitleDiv className={styles.date} fontSize='24px'>{date}</TitleDiv>
       {/* <Dots className={styles.dots} onClick={() => console.log('clicked')}/> */}
-      <Arrow className={styles.arrowButton} direction={showItems ? DirectionEnum.Up : DirectionEnum.Down} />
+      <Arrow className={styles.arrowButton} direction={showItems ? ArrowDirectionEnum.Up : ArrowDirectionEnum.Down} />
     </Container>
     {showItems
       ? <><TopGenres artistsIds={artistsIds} /><SavedSongs items={items}/></>
