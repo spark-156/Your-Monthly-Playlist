@@ -34,7 +34,6 @@ services:
     container_name: your-spotify-monthly-backend
     build:
       context: ./backend
-    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80", "--proxy-headers"]
     environment:
       - CLIENT_ID=
       - CLIENT_SECRET=

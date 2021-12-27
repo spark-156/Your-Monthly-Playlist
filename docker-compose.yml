@@ -33,11 +33,11 @@ services:
       
   backend:
     container_name: your-spotify-monthly-backend-dev
+    command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "80", "--root-path", "/api/v1", "--proxy-headers"]
     depends_on:
       - traefik
     build:
       context: ./backend
-      target: dev
     volumes:
       - ./backend/app:/code/app 
     environment:
