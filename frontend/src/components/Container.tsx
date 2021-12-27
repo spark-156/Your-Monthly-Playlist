@@ -14,14 +14,16 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   maxWidth?: string,
   alignSelfCenter?: boolean,
   disablePadding?: boolean,
+  disablePaddingTopAndBottom?: boolean,
   direction?: ContainerDirectionEnum,
 }
 
-export function Container ({ children, className, maxWidth, alignSelfCenter = false, disablePadding = false, direction = ContainerDirectionEnum.Down, ...props }: ContainerProps) {
+export function Container ({ children, className, maxWidth, alignSelfCenter = false, disablePadding = false, disablePaddingTopAndBottom = false, direction = ContainerDirectionEnum.Down, ...props }: ContainerProps) {
   return <div className={classNames({
     [styles.container]: true,
     [styles.alignSelfCenter]: alignSelfCenter,
     [styles.disablePadding]: disablePadding,
+    [styles.disablePaddingTopAndBottom]: disablePaddingTopAndBottom,
     [styles.rows]: direction === ContainerDirectionEnum.Down,
     [styles.columns]: direction === ContainerDirectionEnum.Right
   }, className)}

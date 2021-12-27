@@ -13,7 +13,7 @@ export function SavedSongs ({ items }: SavedSongsProps) {
 
   return <Container disablePadding>
     <TitleDiv fontSize='20px'>Your saved songs:</TitleDiv>
-    <Container direction={ContainerDirectionEnum.Right}>
+    <Container style={{ paddingTop: 0 }} direction={ContainerDirectionEnum.Right}>
       {savedSongs.map(savedSong => <Song
       key={savedSong.track.id}
       imageSrc={savedSong.track.album.images[0].url}
