@@ -19,15 +19,17 @@
 .title {
   grid-area: title;
   line-height: 30px;
-  overflow: hidden;
 }
 
 .artist {
   grid-area: artists;
   color: var(--ldb-colors-grey);
-  overflow: hidden;
 }
 
-/* .title, .artist {
-  padding-left: var(--ldb-lengths-half);
-} */
+.title, .artist {
+  /* padding-left: var(--ldb-lengths-half); */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  /* animation: slide-left 5s linear infinite; */
+}
