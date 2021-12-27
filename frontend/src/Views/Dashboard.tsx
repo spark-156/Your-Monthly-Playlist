@@ -1,57 +1,69 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Container } from '../components/Container'
-import { Item } from '../types/tracksType'
-import { getSavedTracks } from '../lib/getAllSavedTracks'
-import { DateTime } from 'luxon'
 import { Dropdown } from '../components/Dropdown'
 import { Loading } from '../components/Loading'
+import { Item } from '../types/getPlaylistIDTracks'
+import { getPlaylists } from '../lib/getPlaylists'
+import { cloneDeep } from 'lodash'
+
+type TracksType = {
+  [year: string]: {
+    [month: string]: {
+      [playlist: string]: Item[]
+    }
+  }
+}
 
 export function Dashboard () {
-  const [tracks, setTracks] = useState<{ [key: string]: Item[]}>({})
+  const [tracks, setTracks] = useState<TracksType>({})
   const [loading, setLoading] = useState<boolean>(true)
-  const [months, setMonths] = useState<string[]>([])
 
-  function addTracks (items: Item[]): void {
+  function addTrack (year: string, month: string, playlist:string, item: Item): void {
     setTracks(prevState => {
-      items.forEach(item => {
-        const itemDate = DateTime.fromISO(item.added_at)
-        const itemDateString = `${itemDate.monthLong} ${itemDate.year}`
-        if (prevState[itemDateString]) {
-          prevState[itemDateString] = [item, ...prevState[itemDateString]]
+      const tracksClone = cloneDeep(prevState)
+
+      if (tracksClone[year]) {
+        if (tracksClone[year][month]) {
+          if (tracksClone[year][month][playlist]) {
+            tracksClone[year][month][playlist].push(item)
+          } else {
+            tracksClone[year][month][playlist] = [item]
+          }
         } else {
-          prevState[itemDateString] = [item]
+          tracksClone[year][month] = {
+            [playlist]: [item]
+          }
         }
-      })
-      setMonths(Object.keys(prevState))
-      return prevState
+      } else {
+        tracksClone[year] = {
+          [month]: {
+            [playlist]: [item]
+          }
+        }
+      }
+      return tracksClone
     })
   }
 
   useEffect(() => {
-    async function getData () {
-      try {
-        await getSavedTracks(addTracks)
-        setLoading(false)
-      } catch (err: any) {
-        if (axios.isAxiosError(err)) {
-          console.log('axiosError')
-          console.log(err.response?.data)
-        } else {
-          console.error(err)
-        }
-      }
-    }
-    getData()
+    (async () => {
+      await getPlaylists(addTrack)
+      setLoading(false)
+    })()
   }, [])
 
   return <Container maxWidth="100%" disablePadding>
-    {months.map((value, index, array) => {
+    {Object.keys(tracks).map(year => <Dropdown key={year} title={year}>
+      hi im here
+    </Dropdown>)}
+    {/* {months.map((value, index, array) => {
       if (loading && index === array.length - 1) {
         return <Loading />
       } else {
         return <Dropdown key={value} date={value} items={tracks[value]} />
       }
-    })}
+    })} */}
   </Container>
 }
