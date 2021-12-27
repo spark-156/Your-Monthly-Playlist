@@ -10,6 +10,8 @@
   display: grid;
   
   gap: var(--ldb-lengths-1X);
+
+  scrollbar-color: var(--ldb-colors-white) var(--ldb-colors-black);
 }
 
 .columns {
@@ -19,6 +21,23 @@
 
 .rows {
   grid-auto-flow: row;
+}
+
+.columns::-webkit-scrollbar {
+  height: 5px;
+}
+
+.rows::-webkit-scrollbar {
+  width: 5px;
+}
+
+.columns::-webkit-scrollbar-track, .rows::-webkit-scrollbar-track {
+  background-color: var(--ldb-colors-black);
+}
+
+.columns::-webkit-scrollbar-thumb, .rows::-webkit-scrollbar-thumb {
+  border-radius: 2.5px;
+  background-color: var(--ldb-colors-white);
 }
 
 .alignSelfCenter {
