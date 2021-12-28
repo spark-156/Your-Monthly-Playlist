@@ -1,9 +1,6 @@
-/* eslint-disable no-unused-vars */
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Container } from '../components/Container'
 import { Dropdown } from '../components/Dropdown'
-import { Loading } from '../components/Loading'
 import { Item } from '../types/getPlaylistIDTracks'
 import { getPlaylists } from '../lib/getPlaylists'
 import { cloneDeep } from 'lodash'
@@ -37,7 +34,6 @@ const monthNames: {[key: string]: number} = {
 
 export function Dashboard () {
   const [tracks, setTracks] = useState<TracksType>({})
-  const [loading, setLoading] = useState<boolean>(true)
 
   const now = DateTime.now()
 
@@ -76,7 +72,6 @@ export function Dashboard () {
     (async () => {
       await getPlaylists(addTracks)
       await getSavedTracks(addTracks)
-      setLoading(false)
     })()
   }, [])
 

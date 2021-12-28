@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { getArtists } from '../lib/getArtists'
 import { Item } from '../types/getPlaylistIDTracks'

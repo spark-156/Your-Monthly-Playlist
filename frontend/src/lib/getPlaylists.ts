@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import { GetMePlaylists, Playlist } from '../types/getMePlaylists'
 import { GetPlaylistIDTracks, Item } from '../types/getPlaylistIDTracks'
