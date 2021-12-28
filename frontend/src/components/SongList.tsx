@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Item } from '../types/getPlaylistIDTracks'
 import { Song } from './Song'
 import { TitleDiv } from './TitleDiv'
@@ -11,13 +11,11 @@ interface SavedSongsProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function SongList ({ items, title }: SavedSongsProps) {
-  const [savedSongs] = useState(items.filter((item, index) => items.indexOf(item) === index))
-
   return <Container disablePadding>
     <TitleDiv fontSize='20px'>{title}</TitleDiv>
     <TextDiv>You added {items.length} song{items.length > 1 ? 's' : null} to this playlist</TextDiv>
     <Container style={{ paddingTop: 0 }} direction={ContainerDirectionEnum.Right}>
-      {savedSongs.map(savedSong => <Song
+      {items.map(savedSong => <Song
       key={savedSong.track.id}
       imageSrc={savedSong.track.album.images[0].url}
       songTitle={savedSong.track.name}
