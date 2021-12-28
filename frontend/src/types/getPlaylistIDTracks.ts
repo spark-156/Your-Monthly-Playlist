@@ -11,11 +11,11 @@ export interface GetPlaylistIDTracks {
 
 export interface Item {
   added_at: string;
-  added_by: AddedBy;
-  is_local: boolean;
-  primary_color: null;
+  added_by?: AddedBy;
+  is_local?: boolean;
+  primary_color?: null | string;
   track: Track;
-  video_thumbnail: VideoThumbnail;
+  video_thumbnail?: VideoThumbnail;
 }
 
 export interface AddedBy {

@@ -10,6 +10,7 @@ import { cloneDeep } from 'lodash'
 import { DateTime } from 'luxon'
 import { TopGenres } from '../components/TopGenres'
 import { SongList } from '../components/SongList'
+import { getSavedTracks } from '../lib/getAllSavedTracks'
 
 type TracksType = {
   [year: string]: {
@@ -74,6 +75,7 @@ export function Dashboard () {
   useEffect(() => {
     (async () => {
       await getPlaylists(addTracks)
+      await getSavedTracks(addTracks)
       setLoading(false)
     })()
   }, [])
@@ -84,7 +86,7 @@ export function Dashboard () {
         {Object.keys(tracks[year]).sort((a, b) => { return monthNames[b] - monthNames[a] }).map(month => <Dropdown defaultOpen={year === now.year.toString() && month === now.monthLong} key={`${year}${month}`} title={month} >
           <Container disablePaddingTopAndBottom>
             <TopGenres month={tracks[year][month]} />
-            {Object.keys(tracks[year][month]).map(playlistName => <SongList key={`${year}${month}${playlistName}`} title={`${playlistName} + ${tracks[year][month][playlistName].length}`} items={tracks[year][month][playlistName]} />) }
+            {Object.keys(tracks[year][month]).map(playlistName => <SongList key={`${year}${month}${playlistName}`} title={playlistName} items={tracks[year][month][playlistName]} />) }
           </Container>
         </Dropdown>)}
       </Container>
