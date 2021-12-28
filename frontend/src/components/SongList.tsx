@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Item } from '../types/tracksType'
+import { Item } from '../types/getPlaylistIDTracks'
 import { Song } from './Song'
 import { TitleDiv } from './TitleDiv'
 import { Container, ContainerDirectionEnum } from './Container'
@@ -9,7 +9,7 @@ interface SavedSongsProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
 }
 
-export function SavedSongs ({ items, title }: SavedSongsProps) {
+export function SongList ({ items, title }: SavedSongsProps) {
   const [savedSongs] = useState(items.filter((item, index) => items.indexOf(item) === index))
 
   return <Container disablePadding>
@@ -19,7 +19,7 @@ export function SavedSongs ({ items, title }: SavedSongsProps) {
       key={savedSong.track.id}
       imageSrc={savedSong.track.album.images[0].url}
       songTitle={savedSong.track.name}
-      artists={savedSong.track.artists} />)}
+      artists={savedSong.track.artists.map(artist => artist.name)} />)}
     </Container>
   </Container>
 }

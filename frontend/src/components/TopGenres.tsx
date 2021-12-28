@@ -42,7 +42,7 @@ export function TopGenres ({ month }: TopGenresProps) {
       setLoading(false)
     }
     get()
-  }, [])
+  }, [month])
 
   if (loading) return <Loading />
 

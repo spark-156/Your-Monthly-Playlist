@@ -9,6 +9,7 @@ import { getPlaylists } from '../lib/getPlaylists'
 import { cloneDeep } from 'lodash'
 import { DateTime } from 'luxon'
 import { TopGenres } from '../components/TopGenres'
+import { SongList } from '../components/SongList'
 
 type TracksType = {
   [year: string]: {
@@ -77,24 +78,16 @@ export function Dashboard () {
     })()
   }, [])
 
-  useEffect(() => {
-    Object.keys(tracks).map(key => console.log(tracks[key]))
-  }, [tracks])
-
   return <Container maxWidth="100%" disablePadding>
     {Object.keys(tracks).reverse().map(year => <Dropdown defaultOpen={year === now.year.toString()} key={year} title={year} >
       <Container disablePaddingTopAndBottom>
         {Object.keys(tracks[year]).sort((a, b) => { return monthNames[b] - monthNames[a] }).map(month => <Dropdown defaultOpen={year === now.year.toString() && month === now.monthLong} key={`${year}${month}`} title={month} >
+          <Container disablePaddingTopAndBottom>
             <TopGenres month={tracks[year][month]} />
+            {Object.keys(tracks[year][month]).map(playlistName => <SongList key={`${year}${month}${playlistName}`} title={`${playlistName} + ${tracks[year][month][playlistName].length}`} items={tracks[year][month][playlistName]} />) }
+          </Container>
         </Dropdown>)}
       </Container>
     </Dropdown>)}
-    {/* {months.map((value, index, array) => {
-      if (loading && index === array.length - 1) {
-        return <Loading />
-      } else {
-        return <Dropdown key={value} date={value} items={tracks[value]} />
-      }
-    })} */}
   </Container>
 }

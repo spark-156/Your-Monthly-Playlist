@@ -17,6 +17,7 @@
 .columns {
   grid-auto-flow: column;
   overflow-x: scroll;
+  grid-auto-columns: 140px;
 }
 
 .rows {
