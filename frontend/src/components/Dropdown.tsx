@@ -7,19 +7,11 @@ import { Arrow, ArrowDirectionEnum } from './Arrow'
 
 interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string,
+  defaultOpen?: boolean
 }
 
-export function Dropdown ({ title, children }: DropdownProps) {
-  const [showChildren, setShowChildren] = useState<boolean>(false)
-  // const artistsIds: string[] = []
-  // items.forEach(item => item.track.artists.forEach(artist => artistsIds.push(artist.id)))
-
-  // useEffect(() => {
-  //   const now = DateTime.now()
-  //   if (`${now.monthLong} ${now.year}` === date) {
-  //     setShowItems(true)
-  //   }
-  // }, [])
+export function Dropdown ({ title, defaultOpen = false, children }: DropdownProps) {
+  const [showChildren, setShowChildren] = useState<boolean>(defaultOpen)
 
   return <>
     <Container onClick={() => setShowChildren(prevState => !prevState)} disablePadding className={styles.dropdown} >
