@@ -1,32 +1,35 @@
 .container {
   display: grid;
-  height: 50px;
+  height: 190px;
   width: 100%;
   box-sizing: content-box;
-  grid-template-areas: "image title"
-    "image artists";
-  grid-template-columns: 50px auto;
-  grid-template-rows: 30px 20px;
+  grid-template-areas: "image"
+    "title"
+    "artists";
+  grid-template-columns: 140px;
+  grid-template-rows: 140px 30px 20px;
   gap: none;
 }
 
 .image {
-  width: 50px;
-  height: 50px;
+  width: 140px;
+  height: 140px;
 }
 
 .title {
   grid-area: title;
   line-height: 30px;
-  overflow: hidden;
 }
 
 .artist {
   grid-area: artists;
   color: var(--ldb-colors-grey);
-  overflow: hidden;
 }
 
 .title, .artist {
-  padding-left: var(--ldb-lengths-half);
+  /* padding-left: var(--ldb-lengths-half); */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  /* animation: slide-left 5s linear infinite; */
 }

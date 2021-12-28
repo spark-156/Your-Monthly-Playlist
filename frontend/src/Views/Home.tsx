@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import classNames from 'classnames'
 import React, { useEffect } from 'react'
 
 import { Button } from '../components/Button'

@@ -1,18 +1,17 @@
 import axios from 'axios'
-import { Item, PlaylistItem } from '../types/tracksType'
+import { Item, GetPlaylistIDTracks } from '../types/getPlaylistIDTracks'
 import { axiosSpotifyInstance } from './axiosSpotifyInstance'
 
-export async function getSavedTracks (addTracks: (tracks: Item[]) => void) {
+export async function getSavedTracks (addTracks: (items: Item[], playlist: string) => void) {
   try {
-    // TODO get all playlists and all songs from playlists as well
     let items: Item[] = []
-    let response = await axiosSpotifyInstance.get<PlaylistItem>('/me/tracks?limit=50')
+    let response = await axiosSpotifyInstance.get<GetPlaylistIDTracks>('/me/tracks?limit=50')
     items = [...items, ...response.data.items]
-    addTracks(response.data.items)
+    addTracks(response.data.items, 'Liked Songs')
     while (response.data.next) {
-      response = await axiosSpotifyInstance.get<PlaylistItem>(response.data.next)
+      response = await axiosSpotifyInstance.get<GetPlaylistIDTracks>(response.data.next)
       items = [...items, ...response.data.items]
-      addTracks(response.data.items)
+      addTracks(response.data.items, 'Liked Songs')
     }
     return items
   } catch (err: any) {

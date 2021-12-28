@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import styles from '../styles/Arrow.module.css'
 
-export enum DirectionEnum {
+export enum ArrowDirectionEnum {
   /* eslint-disable no-unused-vars */
   Up = 'up',
   Down = 'down',
@@ -13,7 +13,7 @@ export enum DirectionEnum {
 }
 
 interface ArrowProps extends React.HTMLAttributes<SVGSVGElement> {
-  direction: DirectionEnum
+  direction: ArrowDirectionEnum
 }
 
 export function Arrow ({ direction, className, onClick, ...props }: ArrowProps) {
@@ -21,10 +21,10 @@ export function Arrow ({ direction, className, onClick, ...props }: ArrowProps) 
 
   return <div
     className={classNames(styles.arrow, {
-      [styles.up]: direction === DirectionEnum.Up,
-      [styles.down]: direction === DirectionEnum.Down,
-      [styles.left]: direction === DirectionEnum.Left,
-      [styles.right]: direction === DirectionEnum.Right
+      [styles.up]: direction === ArrowDirectionEnum.Up,
+      [styles.down]: direction === ArrowDirectionEnum.Down,
+      [styles.left]: direction === ArrowDirectionEnum.Left,
+      [styles.right]: direction === ArrowDirectionEnum.Right
     }, className)}
   >
     <svg onClick={onClick} {...props} width="22" height="32" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
