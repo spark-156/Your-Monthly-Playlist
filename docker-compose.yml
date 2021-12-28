@@ -3,6 +3,7 @@ version: "3"
 services:
   traefik:
     image: traefik:v2.4
+    container_name: your-spotify-monthly-traefik-dev
     command:
       - --api.insecure=true
       - --providers.docker
@@ -15,12 +16,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   frontend:
-    container_name: frontend
+    container_name: your-spotify-monthly-frontend-dev
+    depends_on:
+      - backend
     build: 
       context: ./frontend
       target: dev
     volumes:
       - ./frontend/src:/app/src
+      - node_modules
     labels: 
       traefik.enable: true
       traefik.http.routers.frontend.rule: Host(`localhost`)
@@ -28,15 +32,17 @@ services:
       traefik.http.services.frontend.loadbalancer.server.port: 3000
       
   backend:
-    container_name: backend
+    container_name: your-spotify-monthly-backend-dev
+    command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "80", "--root-path", "/api/v1", "--proxy-headers"]
+    depends_on:
+      - traefik
     build:
       context: ./backend
-      target: dev
     volumes:
       - ./backend/app:/code/app 
     environment:
-      - CLIENT_ID=cae1ad79487a49399e13651a8b706cba
-      - CLIENT_SECRET=968c903de9424dd4977184e3f6c0b74f
+      - CLIENT_ID=
+      - CLIENT_SECRET=
       - REDIRECT_URI=http://localhost/api/v1/callback
     labels: 
       traefik.enable: true
