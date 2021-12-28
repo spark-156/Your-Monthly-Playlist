@@ -1,20 +1,25 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { getArtists } from '../lib/getArtists'
+import { Item } from '../types/getPlaylistIDTracks'
 import { Container } from './Container'
 import { Loading } from './Loading'
 import { TextDiv } from './TextDiv'
 import { TitleDiv } from './TitleDiv'
-
+import { flatten } from 'lodash'
 interface TopGenresProps extends React.HTMLAttributes<HTMLDivElement> {
-  artistsIds: string[],
+  month: {[playlist: string]: Item[]}
 }
 
-export function TopGenres ({ artistsIds }: TopGenresProps) {
+export function TopGenres ({ month }: TopGenresProps) {
   const [loading, setLoading] = useState<boolean>(true)
   const [topGenres, setTopGenres] = useState<string[]>([])
 
   useEffect(() => {
     async function get () {
+      const songs = flatten(Object.keys(month).map(key => month[key]))
+      const artistsIds: string[] = []
+      songs.forEach(item => item.track.artists.forEach(artist => artistsIds.push(artist.id)))
       const uniqueArtistIds = artistsIds.filter(function (item, pos) { return artistsIds.indexOf(item) === pos })
 
       const uniqueArtists = await getArtists([...uniqueArtistIds])

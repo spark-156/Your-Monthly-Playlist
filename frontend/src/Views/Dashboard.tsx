@@ -8,6 +8,7 @@ import { Item } from '../types/getPlaylistIDTracks'
 import { getPlaylists } from '../lib/getPlaylists'
 import { cloneDeep } from 'lodash'
 import { DateTime } from 'luxon'
+import { TopGenres } from '../components/TopGenres'
 
 type TracksType = {
   [year: string]: {
@@ -17,9 +18,26 @@ type TracksType = {
   }
 }
 
+const monthNames: {[key: string]: number} = {
+  January: 1,
+  February: 2,
+  March: 3,
+  April: 4,
+  May: 5,
+  June: 6,
+  July: 7,
+  August: 8,
+  September: 9,
+  October: 10,
+  November: 11,
+  December: 12
+}
+
 export function Dashboard () {
   const [tracks, setTracks] = useState<TracksType>({})
   const [loading, setLoading] = useState<boolean>(true)
+
+  const now = DateTime.now()
 
   function addTracks (items: Item[], playlist: string): void {
     setTracks(prevState => {
@@ -64,8 +82,12 @@ export function Dashboard () {
   }, [tracks])
 
   return <Container maxWidth="100%" disablePadding>
-    {Object.keys(tracks).map(year => <Dropdown key={year} title={year} >
-
+    {Object.keys(tracks).reverse().map(year => <Dropdown defaultOpen={year === now.year.toString()} key={year} title={year} >
+      <Container disablePaddingTopAndBottom>
+        {Object.keys(tracks[year]).sort((a, b) => { return monthNames[b] - monthNames[a] }).map(month => <Dropdown defaultOpen={year === now.year.toString() && month === now.monthLong} key={`${year}${month}`} title={month} >
+            <TopGenres month={tracks[year][month]} />
+        </Dropdown>)}
+      </Container>
     </Dropdown>)}
     {/* {months.map((value, index, array) => {
       if (loading && index === array.length - 1) {
