@@ -8,5 +8,6 @@ access_scope = 'user-library-read playlist-read-private playlist-read-collaborat
 
 origins = [
   'http://localhost',
-  'https://accounts.spotify.com'
+  'https://accounts.spotify.com',
+  'https://spotify.lucabergman.nl'
 ]
