@@ -1,11 +1,46 @@
 version: "3"
 
 services:
-  frontend-prod:
-    container_name: frontend-prod
-    image: frontend-prod
+  traefik:
+    image: traefik:v2.4
+    container_name: your-spotify-monthly-traefik
+    command:
+      - --api.insecure=true
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false 
+      - --entrypoints.web.address=:80
+    ports:
+      - "80:80"
+      - "8082:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+  frontend:
+    image: your-spotify-monthly-frontend
+    container_name: your-spotify-monthly-frontend
     build:
       context: ./frontend
       target: production
-    ports:
-      - 80:80
+    labels: 
+      traefik.enable: true
+      traefik.http.routers.frontend.rule: Host(`localhost`)
+      traefik.http.routers.frontend.entrypoints: web
+      traefik.http.services.frontend.loadbalancer.server.port: 80
+      
+
+  backend:
+    image: your-spotify-monthly-backend
+    container_name: your-spotify-monthly-backend
+    build:
+      context: ./backend
+    environment:
+      - CLIENT_ID=
+      - CLIENT_SECRET=
+      - REDIRECT_URI=http://localhost/api/v1/callback
+    labels: 
+      traefik.enable: true
+      traefik.http.routers.backend.rule: Host(`localhost`) && PathPrefix(`/api/v1`)
+      traefik.http.services.backend.loadbalancer.server.port: 80
+      traefik.http.middlewares.backendpathstrip.stripprefix.prefixes: /api/v1
+      traefik.http.routers.backend.middlewares: backendpathstrip@docker
