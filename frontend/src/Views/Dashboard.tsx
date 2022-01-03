@@ -35,14 +35,14 @@ const monthNames: {[key: string]: number} = {
 export function Dashboard () {
   const [tracks, setTracks] = useState<TracksType>({})
 
-  const now = DateTime.now()
+  const now = DateTime.now().setLocale('en-GB')
 
   function addTracks (items: Item[], playlist: string): void {
     setTracks(prevState => {
       const tracksClone = cloneDeep(prevState)
 
       items.forEach(item => {
-        const addedAt = DateTime.fromISO(item.added_at)
+        const addedAt = DateTime.fromISO(item.added_at).setLocale('en-GB')
         if (tracksClone[`${addedAt.year}`]) {
           if (tracksClone[`${addedAt.year}`][addedAt.monthLong]) {
             if (tracksClone[`${addedAt.year}`][addedAt.monthLong][playlist]) {
