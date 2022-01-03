@@ -10,7 +10,7 @@ logs:
 build:
 	docker-compose build
 
-prod:
+prod-start:
 	docker-compose -f docker-compose.prod.yml up -d
 
 prod-down:
