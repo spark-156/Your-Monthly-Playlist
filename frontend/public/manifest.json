@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Your Monthly Playlist",
+  "name": "Jealous of your friends that keep track of their songs on a monthly basis via playlists but don't want to put in the effort? No worries now you can let this app take care of it.",
   "icons": [
     {
       "src": "favicon.ico",
