@@ -11,10 +11,10 @@ interface SavedSongsProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function SongList ({ items, title }: SavedSongsProps) {
-  return <Container disablePadding>
+  return <Container disablePadding halfGap>
     <TitleDiv fontSize='20px'>{title}</TitleDiv>
     <TextDiv>You added {items.length} song{items.length > 1 ? 's' : null} to this playlist</TextDiv>
-    <Container style={{ paddingTop: 0 }} direction={ContainerDirectionEnum.Right}>
+    <Container style={{ paddingTop: 0 }} direction={ContainerDirectionEnum.Right} >
       {items.map(savedSong => <Song
       key={savedSong.track.id}
       imageSrc={savedSong.track.album.images[0].url}

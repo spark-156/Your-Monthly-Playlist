@@ -45,9 +45,9 @@ export function TopGenres ({ month }: TopGenresProps) {
 
   if (loading) return <Loading />
 
-  return <Container disablePadding>
+  return <Container disablePadding halfGap>
     <TitleDiv fontSize='18px'>Your top genres for this month are:</TitleDiv>
-    <Container disablePaddingTopAndBottom>
+    <Container disablePaddingTopAndBottom halfGap>
       {topGenres.map((genre, index) => <TextDiv key={genre} >{index + 1}.  {genre[0].toUpperCase()}{genre.slice(1)}</TextDiv>)}
     </Container>
   </Container>
