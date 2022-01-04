@@ -1,7 +1,7 @@
 .container {
   background-color: var(--ldb-colors-black);
   color: var(--ldb-colors-white);
-  padding: var(--ldb-lengths-default);
+  padding: var(--ldb-lengths-half);
   margin: 0 auto;
   width: 100%;
   height: 100%;
@@ -9,7 +9,7 @@
 
   display: grid;
   
-  gap: var(--ldb-lengths-1X);
+  gap: var(--ldb-lengths-default);
 
   scrollbar-color: var(--ldb-colors-white) var(--ldb-colors-black);
 }
@@ -50,5 +50,9 @@
 }
 
 .disablePaddingTopAndBottom {
-  padding: 0 var(--ldb-lengths-default);
+  padding: 0 var(--ldb-lengths-half);
+}
+
+.halfGap {
+  gap: var(--ldb-lengths-half);
 }
