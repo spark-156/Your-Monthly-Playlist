@@ -28,13 +28,12 @@ axiosSpotifyInstance.interceptors.response.use(async (response: AxiosResponse) =
 }, async (error: AxiosError) => {
   if (error.response?.status === 429) {
     if (error.response.headers['retry-after']) {
-      console.log('rate limited please be patient for ' + error.response.headers['retry-after'] + ' seconds.')
       // eslint-disable-next-line promise/param-names
-      await new Promise(r => setTimeout(r, Number(error.response?.headers['retry-after'])))
+      await new Promise(r => setTimeout(r, Number(error.response?.headers['retry-after']) * 1000))
     } else {
       console.log('rate limited for an undefined amount of time. Please be patient for 5 seconds')
       // eslint-disable-next-line promise/param-names
-      await new Promise(r => setTimeout(r, 5))
+      await new Promise(r => setTimeout(r, 2000))
     }
     return axiosSpotifyInstance.request(error.response.config)
   }
