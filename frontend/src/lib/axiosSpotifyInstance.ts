@@ -33,7 +33,7 @@ axiosSpotifyInstance.interceptors.response.use(async (response: AxiosResponse) =
     } else {
       console.log('rate limited for an undefined amount of time. Please be patient for 5 seconds')
       // eslint-disable-next-line promise/param-names
-      await new Promise(r => setTimeout(r, 5000))
+      await new Promise(r => setTimeout(r, 2000))
     }
     return axiosSpotifyInstance.request(error.response.config)
   }
