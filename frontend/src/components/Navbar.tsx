@@ -15,7 +15,7 @@ export function Navbar () {
       ? <>
         <div onClick={() => setShowModal(true)}>modal</div>
         <Modal show={showModal} onClose={() => setShowModal(false)}>
-          <TextDiv onClick={() => { window.location.href = '/api/v1/logout' }}>Logout</TextDiv>
+          <TextDiv fontSize='24px' onClick={() => { window.location.href = '/api/v1/logout' }}>Logout</TextDiv>
         </Modal>
       </>
       : null}
