@@ -8,6 +8,7 @@ import { DateTime } from 'luxon'
 import { TopGenres } from '../components/TopGenres'
 import { SongList } from '../components/SongList'
 import { getSavedTracks } from '../lib/getAllSavedTracks'
+import { NotFound } from '../components/NotFound'
 
 type TracksType = {
   [year: string]: {
@@ -32,8 +33,15 @@ const monthNames: {[key: string]: number} = {
   December: 12
 }
 
+/* eslint-disable no-unused-vars */
+enum errors {
+  NotFound
+}
+/* eslint-enable no-unused-vars */
+
 export function Dashboard () {
   const [tracks, setTracks] = useState<TracksType>({})
+  const [error, setError] = useState<errors>()
 
   const now = DateTime.now().setLocale('en-GB')
 
@@ -72,6 +80,7 @@ export function Dashboard () {
     (async () => {
       await getPlaylists(addTracks)
       await getSavedTracks(addTracks)
+      if (Object.keys(tracks).length === 0) setError(errors.NotFound) // Nothing found at all
     })()
   }, [])
 
@@ -86,5 +95,6 @@ export function Dashboard () {
         </Dropdown>)}
       </Container>
     </Dropdown>)}
+    {error === errors.NotFound ? <NotFound /> : null}
   </Container>
 }
