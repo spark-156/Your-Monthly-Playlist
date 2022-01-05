@@ -9,6 +9,7 @@ import { TopGenres } from '../components/TopGenres'
 import { SongList } from '../components/SongList'
 import { getSavedTracks } from '../lib/getAllSavedTracks'
 import { NotFound } from '../components/NotFound'
+import { Loading } from '../components/Loading'
 
 type TracksType = {
   [year: string]: {
@@ -41,6 +42,7 @@ enum errors {
 
 export function Dashboard () {
   const [tracks, setTracks] = useState<TracksType>({})
+  const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<errors>()
 
   const now = DateTime.now().setLocale('en-GB')
@@ -80,9 +82,15 @@ export function Dashboard () {
     (async () => {
       await getPlaylists(addTracks)
       await getSavedTracks(addTracks)
-      if (Object.keys(tracks).length === 0) setError(errors.NotFound) // Nothing found at all
+      setLoading(false)
     })()
   }, [])
+
+  useEffect(() => {
+    if (!loading) {
+      if (Object.keys(tracks).length === 0) setError(errors.NotFound) // Nothing found at all
+    }
+  }, [loading])
 
   return <Container maxWidth="100%" disablePadding>
     {Object.keys(tracks).reverse().map(year => <Dropdown bigTitle defaultOpen={year === now.year.toString()} key={year} title={year} >
@@ -95,6 +103,10 @@ export function Dashboard () {
         </Dropdown>)}
       </Container>
     </Dropdown>)}
-    {error === errors.NotFound ? <NotFound /> : null}
+    {loading
+      ? <Loading />
+      : <>
+      {error === errors.NotFound ? <NotFound /> : null}
+    </>}
   </Container>
 }

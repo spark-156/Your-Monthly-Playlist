@@ -8,9 +8,7 @@ import { Home } from './Views/Home'
 function App () {
   const maxWidth = '1200px'
   return <>
-    <Container maxWidth={maxWidth} >
-      <Navbar />
-    </Container>
+    <Navbar />
     <Container maxWidth={maxWidth} >
       <BrowserRouter>
         <Routes>

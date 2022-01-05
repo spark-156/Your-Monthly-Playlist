@@ -1,0 +1,56 @@
+.modal {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: calc(100% + 300px);
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  display: grid;
+  grid-template-areas: "background modal";
+  grid-template-columns: 1fr minmax(auto, 300px);
+
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.modal.enter-done {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.modal.exit {
+  opacity: 0;
+}
+
+.modalContent {
+  grid-area: modal;
+  background-color: var(--ldb-colors-black);
+  display: grid;
+  justify-items: end;
+  grid-template-rows: var(--ldb-lenghts-navbar) 1fr;
+  
+  transform: translateX(0);
+}
+
+.modal.enter-done, .modal-content {
+  transform: translateX(0);
+}
+
+.modal.exit, .modal-content {
+  transform: translateX(300px);
+}
+
+.modalHeader {
+  height: 40px;
+}
+
+/* .modalBody {
+
+} */

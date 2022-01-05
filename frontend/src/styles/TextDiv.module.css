@@ -5,3 +5,8 @@
   width: 100%;
   font-size: var(--ldb-lengths-1X);
 }
+
+.clickable {
+  cursor: pointer;
+  text-decoration: underline;
+}
