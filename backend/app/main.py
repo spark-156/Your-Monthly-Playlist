@@ -33,6 +33,7 @@ def login(response: Response):
         'scope': config.access_scope,
         'redirect_uri': config.redirect_uri,
         'state': state,
+        'show_dialog': True,
     }, quote_via=quote_plus)
 
 @app.get("/callback", response_class=RedirectResponse)
