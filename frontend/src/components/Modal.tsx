@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom'
 import '../styles/Modal.css'
 import { Container } from './Container'
 import { CSSTransition } from 'react-transition-group'
+import { Cross } from './Cross'
 
 interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   show: boolean,
@@ -35,7 +36,7 @@ export function Modal ({ show, onClose, children }: ModalProps) {
     <div onClick={onClose} className="modal">
       <Container onClick={e => e.stopPropagation()} className="modalContent">
         <div className="modalHeader" >
-          <div onClick={onClose}>close me</div>
+          <Cross onClick={onClose} />
         </div>
         <div>
           {children}

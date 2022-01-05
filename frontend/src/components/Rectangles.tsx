@@ -1,8 +1,4 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
-import classNames from 'classnames'
-
-import styles from '../styles/Rectangle.module.css'
 
 interface RectanglesProps extends React.HTMLAttributes<SVGSVGElement> {}
 

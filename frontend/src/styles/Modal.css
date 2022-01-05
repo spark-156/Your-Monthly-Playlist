@@ -48,7 +48,7 @@
 }
 
 .modalHeader {
-  line-height: var(--ldb-lenghts-navbar);
+  height: 40px;
 }
 
 /* .modalBody {
