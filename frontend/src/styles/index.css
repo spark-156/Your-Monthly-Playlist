@@ -22,6 +22,8 @@
   --ldb-lengths-2X: 32px;
   --ldb-lengths-3X: 48px;
   --ldb-lengths-60X: 960px;
+
+  --ldb-lenghts-navbar: 60px;
 }
 
 body, html {
@@ -31,6 +33,7 @@ body, html {
   font-family: 'Karla', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-top: calc(var(--ldb-lenghts-navbar) / 2);
 }
 
 code {

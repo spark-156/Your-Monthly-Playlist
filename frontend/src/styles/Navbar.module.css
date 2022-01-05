@@ -1,0 +1,34 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  max-width: inherit;
+  width: 100%;
+  height: var(--ldb-lenghts-navbar);
+  line-height: var(--ldb-lenghts-navbar);
+  z-index: 1;
+
+  background-color: var(--ldb-colors-black);
+  padding: 0 var(--ldb-lengths-half);
+
+  color: var(--ldb-colors-white);
+
+  /* bad fix should be something better if it truly doesn't fit */
+  overflow: hidden;
+
+  display: grid;
+
+  grid-template-areas: "title icon";
+  grid-template-columns: auto auto;
+  /* box-shadow: 0 1px 1px var(--ldb-colors-grey); */
+}
+
+.title {
+  grid-area: title;
+}
+
+.icon {
+  grid-area: icon;
+  justify-self: right;
+}
