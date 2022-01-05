@@ -11,7 +11,6 @@
   color: var(--ldb-colors-white);
   background-color: var(--ldb-colors-black);
 
-
   /* bad fix should be something better if it truly doesn't fit */
   overflow: hidden;
 
@@ -23,9 +22,13 @@
 
 .title {
   grid-area: title;
+  overflow: hidden;
 }
 
 .icon {
   grid-area: icon;
   justify-self: right;
+  align-self: center;
+  height: 25px;
+  width: 25px;
 }
