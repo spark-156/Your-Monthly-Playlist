@@ -30,7 +30,7 @@ export function Modal ({ show, onClose, children }: ModalProps) {
   return ReactDOM.createPortal(<CSSTransition
     in={show}
     unmountOnExit
-    timeout={{ enter: 300, exit: 300 }}
+    timeout={{ enter: 0, exit: 300 }}
   >
     <div onClick={onClose} className="modal">
       <Container onClick={e => e.stopPropagation()} className="modalContent">
