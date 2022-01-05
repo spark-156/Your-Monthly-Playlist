@@ -116,3 +116,10 @@ def auth_refresh(response: Response, refresh_token: Optional[str] = Cookie(None)
         return response
     else:
         return '/'
+
+@app.get('/logout')
+def logout(response: Response):
+    response.delete_cookie('access_token')
+    response.delete_cookie('refresh_token')
+    response.delete_cookie('has_refresh_token')
+    return response
