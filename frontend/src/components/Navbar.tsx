@@ -12,14 +12,10 @@ export function Navbar () {
 
   return <div className={styles.navbar}>
     <TitleDiv fontSize='30px' className={styles.title}>Your Monthly Playlist</TitleDiv>
-    {getCookie('has_refresh_token')
-      ? <>
-        <MenuOutlined style={{ fontSize: '25px' }} className={styles.icon} onClick={() => setShowModal(true)} />
-        <Modal show={showModal} onClose={() => setShowModal(false)}>
-          <Link textAlign='right' fontSize='24px' href='https://github.com/spark-156/Your-Monthly-Playlist' >Source code</Link>
-          <Link textAlign='right' fontSize='24px' href={'/api/v1/logout'}>Logout</Link>
-        </Modal>
-      </>
-      : null}
+    <MenuOutlined style={{ fontSize: '25px' }} className={styles.icon} onClick={() => setShowModal(true)} />
+    <Modal show={showModal} onClose={() => setShowModal(false)}>
+      <Link textAlign='right' fontSize='24px' href='https://github.com/spark-156/Your-Monthly-Playlist' >Source code</Link>
+      {getCookie('has_refresh_token') ? <Link textAlign='right' fontSize='24px' href={'/api/v1/logout'}>Logout</Link> : null }
+    </Modal>
   </div>
 }
