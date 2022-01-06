@@ -37,7 +37,7 @@ export function Modal ({ show, onClose, children }: ModalProps) {
         <div className="modalHeader" >
           <CloseOutlined style={{ fontSize: '30px' }} onClick={onClose} />
         </div>
-        <div>
+        <div className='modalBody'>
           {children}
         </div>
       </Container>
