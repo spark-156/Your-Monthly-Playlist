@@ -53,6 +53,6 @@
   justify-self: right;
 }
 
-/* .modalBody {
-
-} */
+.modalBody {
+  text-align: right;
+}
