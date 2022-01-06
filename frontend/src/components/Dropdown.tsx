@@ -18,7 +18,7 @@ export function Dropdown ({ title, bigTitle = false, defaultOpen = false, childr
     <Container onClick={() => setShowChildren(prevState => !prevState)} disablePadding className={styles.dropdown} >
       <TitleDiv className={styles.date} fontSize={bigTitle ? '30px' : '22px'}>{title}</TitleDiv>
       {/* <Dots className={styles.dots} onClick={() => console.log('clicked')}/> */}
-      {showChildren ? <DownOutlined style={{ fontSize: '25px' }} className={styles.arrowButton} /> : <UpOutlined style={{ fontSize: '25px' }} className={styles.arrowButton} />}
+      {showChildren ? <UpOutlined style={{ fontSize: '25px' }} className={styles.arrowButton} /> : <DownOutlined style={{ fontSize: '25px' }} className={styles.arrowButton} />}
     </Container>
     {showChildren ? children : null }
     </>
