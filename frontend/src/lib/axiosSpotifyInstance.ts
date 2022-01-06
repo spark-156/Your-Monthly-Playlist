@@ -3,7 +3,6 @@ import { getCookie } from './getCookie'
 
 const axiosSpotifyInstance = axios.create({
   baseURL: 'https://api.spotify.com/v1',
-  timeout: 10000,
   headers: {
     Authorization: `Bearer ${getCookie('access_token')}`
   }
@@ -30,6 +29,7 @@ axiosSpotifyInstance.interceptors.response.use(async (response: AxiosResponse) =
 
   return response
 }, async (error: AxiosError) => {
+  console.log('error on axios', error)
   if (error.response?.status === 429) {
     if (error.response.headers['retry-after']) {
       // eslint-disable-next-line promise/param-names
