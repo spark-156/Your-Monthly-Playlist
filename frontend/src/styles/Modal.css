@@ -54,5 +54,9 @@
 }
 
 .modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ldb-lengths-default);
+
   text-align: right;
 }
