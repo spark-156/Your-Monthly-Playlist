@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _ from 'lodash'
 import { AddItemsToPlaylist } from '../types/addItemsToPlaylist'
 import { CreatedPlaylist } from '../types/createdPlaylist'
 import { Item } from '../types/getPlaylistIDTracks'
@@ -23,14 +24,13 @@ async function addItemsToPlaylist (id: string, uris: string[]) {
 }
 
 export async function createPlaylist (name: string, monthPlaylists: { [playlist: string]: Item[] }) {
-  let items: Item[] = []
-  Object.keys(monthPlaylists).forEach(key => { items = items.concat(monthPlaylists[key]) })
-
+  // create a unique array of all uris from every month (key) of the object monthPlaylists
+  const uris = _.uniq(_.map(_.flatten(_.values(monthPlaylists)), (item) => item.track.uri))
   try {
     const me = await axiosSpotifyInstance.get<Me>('/me')
     const createdPlaylist = await axiosSpotifyInstance.post<CreatedPlaylist>(`/users/${me.data.id}/playlists`, { name })
-    while (items.length > 0) {
-      await addItemsToPlaylist(createdPlaylist.data.id, items.splice(0, 100).map(item => item.track.uri))
+    while (uris.length > 0) {
+      await addItemsToPlaylist(createdPlaylist.data.id, uris.splice(0, 100))
     }
   } catch (err) {
     if (axios.isAxiosError(err)) {
