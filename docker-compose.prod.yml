@@ -3,7 +3,7 @@ version: "3"
 services:
   traefik:
     image: traefik:v2.4
-    container_name: your-spotify-monthly-traefik
+    container_name: your-monthly-playlist-traefik
     command:
       - --api.insecure=true
       - --providers.docker
@@ -17,8 +17,8 @@ services:
 
 
   frontend:
-    image: your-spotify-monthly-frontend
-    container_name: your-spotify-monthly-frontend
+    image: your-monthly-playlist-frontend
+    container_name: your-monthly-playlist-frontend
     build:
       context: ./frontend
       target: production
@@ -30,8 +30,8 @@ services:
       
 
   backend:
-    image: your-spotify-monthly-backend
-    container_name: your-spotify-monthly-backend
+    image: your-monthly-playlist-backend
+    container_name: your-monthly-playlist-backend
     build:
       context: ./backend
     environment:

@@ -3,7 +3,7 @@ version: "3"
 services:
   traefik:
     image: traefik:v2.4
-    container_name: your-spotify-monthly-traefik-dev
+    container_name: your-monthly-playlist-traefik-dev
     command:
       - --api.insecure=true
       - --providers.docker
@@ -16,7 +16,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   frontend:
-    container_name: your-spotify-monthly-frontend-dev
+    container_name: your-monthly-playlist-frontend-dev
     depends_on:
       - backend
     build: 
@@ -31,7 +31,7 @@ services:
       traefik.http.services.frontend.loadbalancer.server.port: 3000
       
   backend:
-    container_name: your-spotify-monthly-backend-dev
+    container_name: your-monthly-playlist-backend-dev
     command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "80", "--root-path", "/api/v1", "--proxy-headers"]
     depends_on:
       - traefik
