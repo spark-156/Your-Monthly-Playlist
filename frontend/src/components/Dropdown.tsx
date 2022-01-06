@@ -7,6 +7,7 @@ import styles from '../styles/Dropdown.module.css'
 import { Item } from '../types/getPlaylistIDTracks'
 import { Modal } from './Modal'
 import { TextDiv } from './TextDiv'
+import { createPlaylist } from '../lib/createPlaylist'
 
 interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string,
@@ -30,7 +31,7 @@ export function Dropdown ({ modalTitle, monthPlaylists, title, bigTitle = false,
     </Container>
     {showChildren ? children : null }
     <Modal title={modalTitle} show={showModal} onClose={() => setShowModal(false)}>
-      <TextDiv fontSize='24px' clickable onClick={() => console.log(monthPlaylists)}>Create playlist</TextDiv>
+      {modalTitle && monthPlaylists ? <TextDiv fontSize='24px' clickable onClick={() => createPlaylist(modalTitle, monthPlaylists)}>Create playlist</TextDiv> : null}
     </Modal>
     </>
 }
