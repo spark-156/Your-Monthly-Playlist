@@ -95,7 +95,7 @@ export function Dashboard () {
   return <Container maxWidth="100%" disablePadding>
     {Object.keys(tracks).reverse().map(year => <Dropdown bigTitle defaultOpen={year === now.year.toString()} key={year} title={year} >
       <Container disablePaddingTopAndBottom>
-        {Object.keys(tracks[year]).sort((a, b) => { return monthNames[b] - monthNames[a] }).map(month => <Dropdown defaultOpen={year === now.year.toString() && month === now.monthLong} key={`${year}${month}`} title={month} >
+        {Object.keys(tracks[year]).sort((a, b) => { return monthNames[b] - monthNames[a] }).map(month => <Dropdown monthPlaylists={tracks[year][month]} defaultOpen={year === now.year.toString() && month === now.monthLong} key={`${year}${month}`} modalTitle={`${month} ${year}`} title={month} >
           <Container disablePaddingTopAndBottom>
             <TopGenres month={tracks[year][month]} />
             {Object.keys(tracks[year][month]).map(playlistName => <SongList key={`${year}${month}${playlistName}`} title={playlistName} items={tracks[year][month][playlistName]} />) }

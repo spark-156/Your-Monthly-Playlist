@@ -24,10 +24,10 @@ async function getPlaylistSongs (playlist: Playlist, addTracks: (items: Item[], 
 export async function getPlaylists (addTracks: (items: Item[], playlist: string) => void) {
   try {
     let response = await axiosSpotifyInstance.get<GetMePlaylists>('/me/playlists?limit=50')
-    response.data.items.forEach(item => getPlaylistSongs(item, addTracks))
+    response.data.items.forEach(async item => await getPlaylistSongs(item, addTracks))
     while (response.data.next) {
       response = await axiosSpotifyInstance.get<GetMePlaylists>(response.data.next)
-      response.data.items.forEach(item => getPlaylistSongs(item, addTracks))
+      response.data.items.forEach(async item => await getPlaylistSongs(item, addTracks))
     }
   } catch (err: any) {
     if (axios.isAxiosError(err)) {
