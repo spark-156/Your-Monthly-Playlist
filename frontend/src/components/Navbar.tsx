@@ -4,8 +4,8 @@ import { getCookie } from '../lib/getCookie'
 import styles from '../styles/Navbar.module.css'
 import { Modal } from './Modal'
 import { MenuOutlined } from '@ant-design/icons'
-import { TextDiv } from './TextDiv'
 import { TitleDiv } from './TitleDiv'
+import { Link } from './Link'
 
 export function Navbar () {
   const [showModal, setShowModal] = useState<boolean>(false)
@@ -16,7 +16,8 @@ export function Navbar () {
       ? <>
         <MenuOutlined style={{ fontSize: '25px' }} className={styles.icon} onClick={() => setShowModal(true)} />
         <Modal show={showModal} onClose={() => setShowModal(false)}>
-          <TextDiv clickable fontSize='24px' onClick={() => { window.location.href = '/api/v1/logout' }}>Logout</TextDiv>
+          <Link textAlign='right' fontSize='24px' href='https://github.com/spark-156/Your-Monthly-Playlist' >Source code</Link>
+          <Link textAlign='right' fontSize='24px' href={'/api/v1/logout'}>Logout</Link>
         </Modal>
       </>
       : null}
