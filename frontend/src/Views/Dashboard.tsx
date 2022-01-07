@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Container } from '../components/Container'
 import { Dropdown } from '../components/Dropdown'
 import { Item } from '../types/getPlaylistIDTracks'
-import { getPlaylists } from '../lib/getPlaylists'
+import { getPlaylistSongs } from '../lib/getPlaylistSongs'
 import { cloneDeep } from 'lodash'
 import { DateTime } from 'luxon'
-import { TopGenres } from '../components/TopGenres'
-import { SongList } from '../components/SongList'
 import { getSavedTracks } from '../lib/getAllSavedTracks'
 import { NotFound } from '../components/NotFound'
 import { Loading } from '../components/Loading'
+import { Month } from '../components/Month'
+import { Playlist } from '../types/getMePlaylists'
+import { getPlaylists } from '../lib/getPlaylists'
 
 type TracksType = {
   [year: string]: {
@@ -42,6 +43,7 @@ enum errors {
 
 export function Dashboard () {
   const [tracks, setTracks] = useState<TracksType>({})
+  const [playlists, setPlaylists] = useState<Playlist[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<errors>()
 
@@ -80,7 +82,9 @@ export function Dashboard () {
 
   useEffect(() => {
     (async () => {
-      await getPlaylists(addTracks)
+      const playlists = await getPlaylists()
+      setPlaylists(playlists)
+      playlists.forEach(async playlist => await getPlaylistSongs(playlist, addTracks))
       await getSavedTracks(addTracks)
       setLoading(false)
     })()
@@ -95,12 +99,7 @@ export function Dashboard () {
   return <Container maxWidth="100%" disablePadding>
     {Object.keys(tracks).reverse().map(year => <Dropdown bigTitle defaultOpen={year === now.year.toString()} key={year} title={year} >
       <Container disablePaddingTopAndBottom>
-        {Object.keys(tracks[year]).sort((a, b) => { return monthNames[b] - monthNames[a] }).map(month => <Dropdown monthPlaylists={tracks[year][month]} defaultOpen={year === now.year.toString() && month === now.monthLong} key={`${year}${month}`} modalTitle={`${month} ${year}`} title={month} >
-          <Container disablePaddingTopAndBottom>
-            <TopGenres month={tracks[year][month]} />
-            {Object.keys(tracks[year][month]).map(playlistName => <SongList key={`${year}${month}${playlistName}`} title={playlistName} items={tracks[year][month][playlistName]} />) }
-          </Container>
-        </Dropdown>)}
+        {Object.keys(tracks[year]).sort((a, b) => { return monthNames[b] - monthNames[a] }).map(month => <Month playlists={playlists} month={month} year={year} monthPlaylists={tracks[year][month]} key={`${year} ${month}`} />)}
       </Container>
     </Dropdown>)}
     {loading
