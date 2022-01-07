@@ -25,7 +25,14 @@ async function addItemsToPlaylist (id: string, uris: string[]) {
 
 export async function createPlaylist (name: string, monthPlaylists: { [playlist: string]: Item[] }) {
   // create a unique array of all uris from every month (key) of the object monthPlaylists
-  const uris = _.uniq(_.map(_.flatten(_.values(monthPlaylists)), (item) => item.track.uri))
+  const uris: string[] = _
+    .chain(monthPlaylists)
+    .values()
+    .flatten()
+    .map(item => item.track.uri)
+    .uniq()
+    .value()
+
   try {
     const me = await axiosSpotifyInstance.get<Me>('/me')
     const createdPlaylist = await axiosSpotifyInstance.post<CreatedPlaylist>(`/users/${me.data.id}/playlists`, { name })
