@@ -33,7 +33,7 @@ export function Month ({ playlists, year, month, monthPlaylists }: MonthProps) {
         {Object.keys(monthPlaylists).map(playlistName => <SongList key={`${year}${month}${playlistName}`} title={playlistName} items={monthPlaylists[playlistName]} />) }
       </Container>
     </Dropdown>
-    <Modal title={''} show={showModal} onClose={() => setShowModal(false)}>
+    <Modal title={playlistTitle} show={showModal} onClose={() => setShowModal(false)}>
       <TextDiv fontSize='24px' clickable onClick={() => createPlaylist(playlistTitle, monthPlaylists)}>Create playlist</TextDiv>
     </Modal>
   </>
