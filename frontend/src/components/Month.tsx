@@ -38,10 +38,6 @@ export function Month ({ playlists, year, month, monthPlaylists }: MonthProps) {
     })()
   }, [])
 
-  useEffect(() => {
-    console.log(monthPlaylist)
-  }, [monthPlaylist])
-
   return <>
     <Dropdown defaultOpen={year === now.year.toString() && month === now.monthLong} modalTitle={playlistTitle} title={month} setShowModal={setShowModal} >
       <Container disablePaddingTopAndBottom>
