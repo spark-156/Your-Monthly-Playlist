@@ -4,6 +4,7 @@ import { DateTime } from 'luxon'
 import React, { useEffect, useState } from 'react'
 import { createPlaylist } from '../lib/createPlaylist'
 import { getTopGenres } from '../lib/getTopGenres'
+import { updatePlaylist } from '../lib/updatePlaylis'
 import { Playlist } from '../types/getMePlaylists'
 import { Item } from '../types/getPlaylistIDTracks'
 import { Container } from './Container'
@@ -25,7 +26,7 @@ interface MonthProps extends React.HTMLAttributes<HTMLDivElement> {
 export function Month ({ playlists, year, month, monthPlaylists }: MonthProps) {
   const now = DateTime.now().setLocale('en-GB')
   const playlistTitle = `${month} ${year}`
-  const [monthPlaylist, setMonthPlaylist] = useState(playlists.filter(playlist => playlist.name === playlistTitle))
+  const [monthPlaylist, setMonthPlaylist] = useState<Playlist | undefined>(playlists.filter(playlist => playlist.name === playlistTitle)[0])
   const [showModal, setShowModal] = useState<boolean>(false)
   const [topGenres, setTopGenres] = useState<string[]>([])
   const [loadingTopGenres, setLoadingTopGenres] = useState<boolean>(true)
@@ -37,6 +38,10 @@ export function Month ({ playlists, year, month, monthPlaylists }: MonthProps) {
     })()
   }, [])
 
+  useEffect(() => {
+    console.log(monthPlaylist)
+  }, [monthPlaylist])
+
   return <>
     <Dropdown defaultOpen={year === now.year.toString() && month === now.monthLong} modalTitle={playlistTitle} title={month} setShowModal={setShowModal} >
       <Container disablePaddingTopAndBottom>
@@ -45,7 +50,8 @@ export function Month ({ playlists, year, month, monthPlaylists }: MonthProps) {
       </Container>
     </Dropdown>
     <Modal title={playlistTitle} show={showModal} onClose={() => setShowModal(false)}>
-      <TextDiv fontSize='24px' clickable onClick={() => createPlaylist(playlistTitle, monthPlaylists)}>Create playlist</TextDiv>
+      {!monthPlaylist ? <TextDiv fontSize='24px' clickable onClick={async () => { setMonthPlaylist(await createPlaylist(playlistTitle, monthPlaylists)); setShowModal(false) }}>Create playlist</TextDiv> : null}
+      {monthPlaylist ? <TextDiv fontSize='24px' clickable onClick={() => { updatePlaylist(monthPlaylist.id, monthPlaylists); setShowModal(false) }}>Update playlist</TextDiv> : null}
     </Modal>
   </>
 }
