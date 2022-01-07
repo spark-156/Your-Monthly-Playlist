@@ -1,34 +1,18 @@
 import axios from 'axios'
 import { GetMePlaylists, Playlist } from '../types/getMePlaylists'
-import { GetPlaylistIDTracks, Item } from '../types/getPlaylistIDTracks'
 import { axiosSpotifyInstance } from './axiosSpotifyInstance'
 
-async function getPlaylistSongs (playlist: Playlist, addTracks: (items: Item[], playlist: string) => void) {
-  try {
-    let response = await axiosSpotifyInstance.get<GetPlaylistIDTracks>(playlist.tracks.href)
-    addTracks(response.data.items, playlist.name)
-    while (response.data.next) {
-      response = await axiosSpotifyInstance.get<GetPlaylistIDTracks>(response.data.next)
-      addTracks(response.data.items, playlist.name)
-    }
-  } catch (err: any) {
-    if (axios.isAxiosError(err)) {
-      console.log('axiosError')
-      console.log(err.response?.data)
-    } else {
-      console.error(err)
-    }
-  }
-}
-
-export async function getPlaylists (addTracks: (items: Item[], playlist: string) => void) {
+export async function getPlaylists () {
+  // get current users playlists
+  let playlists: Playlist[] = []
   try {
     let response = await axiosSpotifyInstance.get<GetMePlaylists>('/me/playlists?limit=50')
-    response.data.items.forEach(async item => await getPlaylistSongs(item, addTracks))
+    playlists = playlists.concat(response.data.items)
     while (response.data.next) {
       response = await axiosSpotifyInstance.get<GetMePlaylists>(response.data.next)
-      response.data.items.forEach(async item => await getPlaylistSongs(item, addTracks))
+      playlists = playlists.concat(response.data.items)
     }
+    return playlists
   } catch (err: any) {
     if (axios.isAxiosError(err)) {
       console.log('axiosError')
@@ -36,5 +20,6 @@ export async function getPlaylists (addTracks: (items: Item[], playlist: string)
     } else {
       console.error(err)
     }
+    return []
   }
 }
