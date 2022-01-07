@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { DateTime } from 'luxon'
 import React, { useEffect, useState } from 'react'
 import { createPlaylist } from '../lib/createPlaylist'
-import { getArtists } from '../lib/getArtists'
+import { getTopGenres } from '../lib/getTopGenres'
 import { Playlist } from '../types/getMePlaylists'
 import { Item } from '../types/getPlaylistIDTracks'
 import { Container } from './Container'
@@ -31,30 +31,10 @@ export function Month ({ playlists, year, month, monthPlaylists }: MonthProps) {
   const [loadingTopGenres, setLoadingTopGenres] = useState<boolean>(true)
 
   useEffect(() => {
-    async function get () {
-      const artistIds: string[] = _
-        .chain(monthPlaylists)
-        .values()
-        .flatten()
-        .map(song => song.track.artists)
-        .flatten()
-        .map(artist => artist.id)
-        .value()
-      const uniqueArtistIds: string[] = _.uniq(artistIds)
-      const uniqueArtists = await getArtists([...uniqueArtistIds])
-      const genresList: string[] = []
-      uniqueArtistIds.forEach(id => {
-        uniqueArtists.filter(artist => artist.id === id).forEach(artist => artist.genres.forEach(genre => genresList.push(genre)))
-      })
-      const genres: {[key: string]: number} = {}
-      for (const genre of genresList) {
-        genres[genre] = genres[genre] ? genres[genre] + 1 : 1
-      }
-      const items: [string, number][] = Object.keys(genres).map(key => [key, genres[key]])
-      setTopGenres(items.sort((first, second) => second[1] - first[1]).slice(0, 5).map(item => item[0]))
+    (async () => {
+      setTopGenres(await getTopGenres(monthPlaylists))
       setLoadingTopGenres(false)
-    }
-    get()
+    })()
   }, [])
 
   return <>
