@@ -4,9 +4,10 @@ import { Playlist } from '../types/getMePlaylists'
 import { Item } from '../types/getPlaylistIDTracks'
 import { Me } from '../types/meType'
 import { axiosSpotifyInstance } from './axiosSpotifyInstance'
+import { formatPlaylistDescription } from './formatPlaylistDescription'
 import { putItemsInPlaylist } from './putItemsInPlaylist'
 
-export async function createPlaylist (name: string, monthPlaylists: { [playlist: string]: Item[] }) {
+export async function createPlaylist (name: string, monthPlaylists: { [playlist: string]: Item[] }, topGenres: string[]) {
   // create a unique array of all uris from every month (key) of the object monthPlaylists
   const uris: string[] = _
     .chain(monthPlaylists)
@@ -18,7 +19,10 @@ export async function createPlaylist (name: string, monthPlaylists: { [playlist:
 
   try {
     const me = await axiosSpotifyInstance.get<Me>('/me')
-    const response = await axiosSpotifyInstance.post<Playlist>(`/users/${me.data.id}/playlists`, { name })
+    const response = await axiosSpotifyInstance.post<Playlist>(`/users/${me.data.id}/playlists`, {
+      name,
+      description: formatPlaylistDescription(topGenres)
+    })
     while (uris.length > 0) {
       await putItemsInPlaylist(response.data.id, uris.splice(0, 100))
     }

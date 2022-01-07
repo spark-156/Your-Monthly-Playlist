@@ -46,8 +46,8 @@ export function Month ({ playlists, year, month, monthPlaylists }: MonthProps) {
       </Container>
     </Dropdown>
     <Modal title={playlistTitle} show={showModal} onClose={() => setShowModal(false)}>
-      {!monthPlaylist ? <TextDiv fontSize='24px' clickable onClick={async () => { setMonthPlaylist(await createPlaylist(playlistTitle, monthPlaylists)); setShowModal(false) }}>Create playlist</TextDiv> : null}
-      {monthPlaylist ? <TextDiv fontSize='24px' clickable onClick={() => { updatePlaylist(monthPlaylist.id, monthPlaylists); setShowModal(false) }}>Update playlist</TextDiv> : null}
+      {!monthPlaylist ? <TextDiv fontSize='24px' clickable onClick={async () => { setMonthPlaylist(await createPlaylist(playlistTitle, monthPlaylists, topGenres)); setShowModal(false) }}>Create playlist</TextDiv> : null}
+      {monthPlaylist ? <TextDiv fontSize='24px' clickable onClick={() => { updatePlaylist(monthPlaylist.id, monthPlaylists, topGenres); setShowModal(false) }}>Update playlist</TextDiv> : null}
     </Modal>
   </>
 }
