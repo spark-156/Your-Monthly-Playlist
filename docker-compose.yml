@@ -15,38 +15,26 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  frontend:
-    container_name: your-spotify-monthly-frontend-dev
-    depends_on:
-      - backend
+  app:
+    container_name: your-spotify-monthly-app-dev
     build: 
-      context: ./frontend
-      target: dev
+      context: ./app
+      target: development
     volumes:
-      - ./frontend/src:/app/src
-      - node_modules
+      - ./app:/usr/src/app
+      - your_spotify_node_modules:/usr/src/app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
     labels: 
       traefik.enable: true
       traefik.http.routers.frontend.rule: Host(`localhost`)
       traefik.http.routers.frontend.entrypoints: web
       traefik.http.services.frontend.loadbalancer.server.port: 3000
-      
-  backend:
-    container_name: your-spotify-monthly-backend-dev
-    command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "80", "--root-path", "/api/v1", "--proxy-headers"]
-    depends_on:
-      - traefik
-    build:
-      context: ./backend
-    volumes:
-      - ./backend/app:/code/app 
-    environment:
-      - CLIENT_ID=
-      - CLIENT_SECRET=
-      - REDIRECT_URI=http://localhost/api/v1/callback
-    labels: 
-      traefik.enable: true
-      traefik.http.routers.backend.rule: Host(`localhost`) && PathPrefix(`/api/v1`)
-      traefik.http.services.backend.loadbalancer.server.port: 80
-      traefik.http.middlewares.backendpathstrip.stripprefix.prefixes: /api/v1
-      traefik.http.routers.backend.middlewares: backendpathstrip@docker
+
+  redis:
+    container_name: your-spotify-monthly-redis-dev
+    image: redis
+
+volumes:
+  your_spotify_node_modules:

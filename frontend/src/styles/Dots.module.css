@@ -1,7 +1,0 @@
-.dots {
-  display: grid;
-  grid-auto-rows: auto;
-  grid-auto-columns: auto;
-  align-items: center;
-  justify-items: center;
-}
