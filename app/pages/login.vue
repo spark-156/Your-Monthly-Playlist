@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 <template>
   <v-btn
-    color="primary"
+    color="green"
     elevation="2"
     large
     raised
