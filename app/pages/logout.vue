@@ -14,7 +14,7 @@
 <script>
 export default {
   name: 'LogoutPage',
-  layout: 'logout',
+  // layout: '',
   auth: false
 }
 </script>

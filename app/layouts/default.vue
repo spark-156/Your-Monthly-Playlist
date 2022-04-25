@@ -10,7 +10,7 @@
         <v-btn
           class="btn-fix"
           x-large
-          to="/"
+          :to="homeButtonLink"
         >
           Your Spotify Monthly
         </v-btn>
@@ -105,14 +105,14 @@ export default {
       drawer: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Dashboard',
+          icon: 'mdi-home-variant',
+          title: 'Home',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Tutorial',
-          to: '/tutorial'
+          icon: 'mdi-apps',
+          title: 'Dashboard',
+          to: '/dashboard'
         }
       ]
     }
@@ -120,6 +120,13 @@ export default {
   computed: {
     profileImage () {
       return this.user.images[0]
+    },
+    homeButtonLink () {
+      if (this.$auth.loggedIn) {
+        return '/dashboard'
+      } else {
+        return '/'
+      }
     }
   },
   methods: {
