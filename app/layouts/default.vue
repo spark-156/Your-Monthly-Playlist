@@ -42,8 +42,28 @@
 
         <div v-if="loggedIn">
           <v-list-item>
+            <v-list-item-action>
+              <v-avatar
+                size="30px"
+              >
+                <v-img
+                  v-if="profileImage"
+                  alt="Avatar"
+                  :src="profileImage.url"
+                  :height="profileImage.height"
+                  :width="profileImage.width"
+                />
+                <v-icon
+                  v-else
+                  color="blue"
+                  text="mdi-account-multiple"
+                />
+              </v-avatar>
+            </v-list-item-action>
             <v-list-item-content>
-              <span>Logged in as {{ user.display_name }}</span>
+              <v-list-item-title>
+                {{ user.display_name }}
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
@@ -95,6 +115,11 @@ export default {
           to: '/tutorial'
         }
       ]
+    }
+  },
+  computed: {
+    profileImage () {
+      return this.user.images[0]
     }
   },
   methods: {
