@@ -22,7 +22,7 @@ services:
       target: development
     volumes:
       - ./app:/usr/src/app
-      - your_spotify_node_modules:/usr/src/app/node_modules
+      - /usr/src/app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
       - NODE_ENV=development
@@ -37,6 +37,3 @@ services:
   redis:
     container_name: your-spotify-monthly-redis-dev
     image: redis
-
-volumes:
-  your_spotify_node_modules:
