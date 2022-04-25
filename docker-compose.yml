@@ -25,7 +25,8 @@ services:
       - /usr/src/app/node_modules
     environment:
       # prepend env variables with NUXT_ENV_ to use them within the app
-      - CLIENT_URL=http://localhost/
+      # NO TRAILING SLASHES
+      - CLIENT_URL=http://localhost
       - REDIS_URL=redis:redis:6379
       - SPOTIFY_SECRET=
       - SPOTIFY_CLIENT_ID=cae1ad79487a49399e13651a8b706cba

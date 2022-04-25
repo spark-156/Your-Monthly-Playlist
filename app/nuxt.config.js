@@ -68,7 +68,7 @@ export default {
         responseType: 'token',
         grantType: 'authorization_code',
         accessType: undefined,
-        redirectUri: process.env.CLIENT_URL,
+        redirectUri: `${process.env.CLIENT_URL}/dashboard`,
         logoutRedirectUri: undefined,
         clientId: process.env.SPOTIFY_CLIENT_ID,
         scope: ['user-read-private', 'user-read-email'],
