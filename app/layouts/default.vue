@@ -6,7 +6,7 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title>Your Spotify Monthly</v-toolbar-title>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -52,7 +52,6 @@ export default {
   name: 'DefaultLayout',
   data () {
     return {
-      clipped: false,
       drawer: false,
       items: [
         {
@@ -65,8 +64,7 @@ export default {
           title: 'Inspire',
           to: '/inspire'
         }
-      ],
-      title: 'Your Spotify Monthly'
+      ]
     }
   },
   methods: {
