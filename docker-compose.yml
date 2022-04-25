@@ -24,10 +24,10 @@ services:
       - ./app:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      - CHOKIDAR_USEPOLLING=true
-      - NODE_ENV=development
-      - NUXT_ENV_SPOTIFY_CLIENT_ID=
+      - REDIS_URL=redis:redis:6379
       - NUXT_ENV_CLIENT_URL=/
+      - SPOTIFY_SECRET=
+      - NUXT_ENV_SPOTIFY_CLIENT_ID=
     labels: 
       traefik.enable: true
       traefik.http.routers.frontend.rule: Host(`localhost`)

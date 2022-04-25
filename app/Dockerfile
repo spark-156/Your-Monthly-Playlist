@@ -6,12 +6,14 @@ COPY package.json yarn.lock ./
 
 FROM base as development
 ENV HOST=0.0.0.0
+ENV CHOKIDAR_USEPOLLING=true
+ENV NODE_ENV=development
 EXPOSE 3000
-RUN yarn global add nodemon
 RUN yarn
 CMD yarn dev
 
 FROM base as build
+ENV NODE_ENV=production
 COPY . .
 RUN yarn install \
   --prefer-offline \
