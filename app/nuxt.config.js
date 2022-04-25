@@ -71,7 +71,7 @@ export default {
         redirectUri: `${process.env.CLIENT_URL}/dashboard`,
         logoutRedirectUri: undefined,
         clientId: process.env.SPOTIFY_CLIENT_ID,
-        scope: ['user-read-private', 'user-read-email'],
+        scope: ['user-read-private', 'user-read-email', 'user-follow-read', 'playlist-read-collaborative', 'playlist-read-private', 'user-library-read'],
         state: '',
         codeChallengeMethod: '',
         responseMode: '',
@@ -80,6 +80,7 @@ export default {
       }
     }
   },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
