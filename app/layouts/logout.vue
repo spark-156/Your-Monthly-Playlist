@@ -40,25 +40,6 @@
           </v-list-item-content>
         </v-list-item>
 
-        <div v-if="loggedIn">
-          <v-list-item>
-            <v-list-item-content>
-              <span>Logged in as {{ user.display_name }}</span>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-btn
-              block
-              color="primary"
-              outlined
-              elevation="2"
-              @click="logout"
-            >
-              Logout
-            </v-btn>
-          </v-list-item>
-        </div>
-
         <v-list-item>
           <v-list-item-content>
             <span>&copy; Made by <a href="https://www.lucabergman.nl/" target="_blank" class="button--doc text-green-500 hover:underline">Luca Bergman</a></span>
@@ -80,8 +61,6 @@ export default {
   name: 'DefaultLayout',
   data () {
     return {
-      loggedIn: this.$auth.loggedIn,
-      user: this.$auth.user,
       drawer: false,
       items: [
         {
@@ -95,11 +74,6 @@ export default {
           to: '/tutorial'
         }
       ]
-    }
-  },
-  methods: {
-    async logout () {
-      await this.$auth.logout()
     }
   }
 }

@@ -38,13 +38,62 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
 
+  auth: {
+    redirect: {
+      logout: '/logout'
+    },
+    // cookie: false,
+    strategies: {
+      social: {
+        scheme: 'oauth2',
+        endpoints: {
+          authorization: 'https://accounts.spotify.com/authorize',
+          token: undefined,
+          userInfo: 'https://api.spotify.com/v1/me'
+          // logout: '/'
+        },
+        token: {
+          property: 'access_token',
+          type: 'Bearer',
+          maxAge: 3600
+        },
+        // refreshToken: {
+        //   property: 'refresh_token',
+        //   maxAge: 60 * 60 * 24 * 30
+        // },
+        responseType: 'token',
+        grantType: 'authorization_code',
+        accessType: undefined,
+        redirectUri: 'http://localhost:3000/',
+        // logoutRedirectUri: 'http://localhost:3000/logout',
+        clientId: 'cae1ad79487a49399e13651a8b706cba',
+        scope: ['user-read-private', 'user-read-email'],
+        state: '',
+        codeChallengeMethod: '',
+        responseMode: '',
+        acrValues: ''
+        // autoLogout: false
+      }
+    }
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/'
+  },
+
+  compilerOptions: {
+    types: [
+      '@nuxtjs/auth-next'
+    ]
+  },
+
+  router: {
+    middleware: ['auth']
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
