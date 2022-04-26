@@ -29,7 +29,7 @@
         rounded
         nuxt
         color="green"
-        to="login"
+        :to="tryItOutLink"
       >
         Try it out!
       </v-btn>
@@ -40,6 +40,15 @@
 <script>
 export default {
   name: 'IndexPage',
-  auth: false
+  auth: false,
+  computed: {
+    tryItOutLink () {
+      if (this.$auth.loggedIn) {
+        return '/dashboard'
+      } else {
+        return '/login'
+      }
+    }
+  }
 }
 </script>
