@@ -21,6 +21,15 @@
           >
             Log auth
           </v-btn>
+          <v-btn
+            color="primary"
+            elevation="4"
+            rounded
+            x-large
+            @click="getPlaylists"
+          >
+            Log spotifyApi
+          </v-btn>
         </v-container>
       </v-card>
     </v-col>
@@ -36,11 +45,15 @@ export default {
     }
   },
   methods: {
+    async getPlaylists () {
+      const response = await this.$spotifyApi.getUserPlaylists(this.$auth.user.id, { limit: 50 })
+      console.log(response)
+    },
     logUser () {
       console.log(this.user)
     },
     logAuth () {
-      console.log(this.$auth.strategy)
+      console.log(this.$auth.strategy.token.get())
     }
   }
 }
