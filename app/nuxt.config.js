@@ -21,8 +21,7 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -46,6 +45,9 @@ export default {
     redirect: {
       logout: '/logout'
     },
+    plugins: [
+      '~/plugins/spotifyWebApi.ts'
+    ],
     // cookie: false,
     strategies: {
       social: {
@@ -59,7 +61,7 @@ export default {
         token: {
           property: 'access_token',
           type: 'Bearer',
-          maxAge: 3600
+          maxAge: 1800
         },
         // refreshToken: {
         //   property: 'refresh_token',
@@ -75,8 +77,8 @@ export default {
         state: '',
         codeChallengeMethod: '',
         responseMode: '',
-        acrValues: ''
-        // autoLogout: false
+        acrValues: '',
+        autoLogout: true
       }
     }
   },
