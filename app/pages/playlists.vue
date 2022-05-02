@@ -28,6 +28,8 @@
       :key="i"
       cols="6"
       sm="3"
+      lg="2"
+      xl="1"
     >
       <playlist-card
         v-model="item.selected"
