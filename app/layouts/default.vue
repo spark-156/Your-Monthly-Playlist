@@ -113,6 +113,11 @@ export default {
           icon: 'mdi-apps',
           title: 'Dashboard',
           to: '/dashboard'
+        },
+        {
+          icon: 'mdi-playlist-music',
+          title: 'Playlists',
+          to: '/playlists'
         }
       ]
     }

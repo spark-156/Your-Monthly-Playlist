@@ -25,11 +25,11 @@
     </p>
     <p>
       <v-btn
+        :to="tryItOutLink"
         x-large
         rounded
         nuxt
         color="green"
-        :to="tryItOutLink"
       >
         Try it out!
       </v-btn>
