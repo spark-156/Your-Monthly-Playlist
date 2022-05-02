@@ -5,9 +5,15 @@
     >
       <v-card>
         <v-card-title>Playlists</v-card-title>
+        <v-card-subtitle>{{ numberOfPlaylistsString }} found</v-card-subtitle>
+
+        <v-card-text>
+          Please select all the playlists you would like to include in the calculation of your monthly playlists.
+        </v-card-text>
+
         <v-card-actions>
           <v-btn @click="log">
-            log
+            DEBUG LOG
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -58,6 +64,11 @@ export default {
   fetchOnServer: false,
   fetchKey: 'playlists',
   computed: {
+    numberOfPlaylistsString () {
+      let word = 'playlists'
+      if (this.numberOfSongs === 1) { word = 'playlists' }
+      return `${this.$store.state.playlists.amount} ${word}`
+    },
     unselectedPlaylists () {
       return this.$store.state.playlists.list.filter(item => !item.selectected)
     },
