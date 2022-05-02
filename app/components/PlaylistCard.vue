@@ -1,7 +1,11 @@
 <template>
   <v-card
-    class="rounded-lg"
+    class="rounded-lg card"
     :outlined="selected"
+    :color="cardColor"
+    @mouseover="hover = true"
+    @mouseleave="hover = false"
+    @click="handleChange"
   >
     <v-responsive :aspect-ratio="1/1.5">
       <v-container>
@@ -12,6 +16,19 @@
             width="100%"
             height="100%"
           >
+            <v-fab-transition>
+              <v-btn
+                v-show="hover"
+                fab
+                color="green"
+                absolute
+                right
+                small
+                class="floating-fab-bottom"
+              >
+                <v-icon>{{ icon }}</v-icon>
+              </v-btn>
+            </v-fab-transition>
             <v-img
               v-if="image"
               :aspect-ratio="1"
@@ -68,9 +85,12 @@ export default {
       type: Number,
       required: true
     },
-    image: {
-      type: Object,
-      required: true
+    // eslint-disable-next-line vue/require-default-prop
+    image: Object
+  },
+  data () {
+    return {
+      hover: false
     }
   },
   computed: {
@@ -78,15 +98,32 @@ export default {
       let word = 'songs'
       if (this.numberOfSongs === 1) { word = 'song' }
       return `${this.numberOfSongs} ${word}`
+    },
+    icon () {
+      if (!this.selected) { return 'mdi-plus' } else { return 'mdi-minus' }
+    },
+    cardColor () {
+      if (this.hover) {
+        return '#303030'
+      } else {
+        return 'dark'
+      }
     }
   },
   methods: {
-    handleClick () {
-      console.log(this.title)
-    },
     handleChange () {
-      this.$emit('input', this.selected)
+      this.$emit('toggleSelected', this.selected)
     }
   }
 }
 </script>
+
+<style scoped>
+.floating-fab-bottom {
+  bottom: 16px;
+}
+
+.card {
+  border-color: #4CAF50 !important;
+}
+</style>

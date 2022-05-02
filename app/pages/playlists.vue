@@ -38,10 +38,11 @@
       xl="1"
     >
       <playlist-card
-        v-model="item.selected"
         :title="item.playlist.name"
         :number-of-songs="item.playlist.tracks.total"
         :image="item.playlist.images[0]"
+        :selected="item.selected"
+        @toggleSelected="toggle(item)"
       />
     </v-col>
   </v-row>
