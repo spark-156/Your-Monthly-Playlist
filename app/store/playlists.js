@@ -1,6 +1,7 @@
 export const state = () => ({
   list: [],
-  amount: 0
+  amount: 0,
+  hasLoaded: false
 })
 
 export const mutations = {
@@ -14,10 +15,15 @@ export const mutations = {
     state.list.splice(state.list.indexOf(item), 1)
   },
   toggle (_state, item) {
-    console.log(item)
     item.selected = !item.selected
   },
   empty (state) {
     state.list = []
+  },
+  setHasLoadedTrue (state) {
+    state.hasLoaded = true
+  },
+  setHasLoadedFalse (state) {
+    state.hasLoaded = false
   }
 }

@@ -12,6 +12,13 @@
         </v-card-text>
 
         <v-card-actions>
+          <v-btn
+            :loading="!hasLoaded"
+            @click="refreshPlaylists"
+            color="green"
+          >
+            REFRESH
+          </v-btn>
           <v-btn @click="log">
             DEBUG LOG
           </v-btn>
@@ -59,12 +66,16 @@ export default {
     }
   },
   async fetch () {
-    this.$store.commit('playlists/empty')
-    await this.getPlaylists()
+    if (!this.hasLoaded) {
+      await this.refreshPlaylists()
+    }
   },
   fetchOnServer: false,
   fetchKey: 'playlists',
   computed: {
+    hasLoaded () {
+      return this.$store.state.playlists.hasLoaded
+    },
     numberOfPlaylistsString () {
       let word = 'playlists'
       if (this.numberOfSongs === 1) { word = 'playlists' }
@@ -87,6 +98,12 @@ export default {
         }
       } while (res.next)
       this.$store.commit('playlists/setAmount', res.total)
+    },
+    async refreshPlaylists () {
+      this.$store.commit('playlists/setHasLoadedFalse')
+      this.$store.commit('playlists/empty')
+      await this.getPlaylists()
+      this.$store.commit('playlists/setHasLoadedTrue')
     },
     ...mapMutations({
       toggle: 'playlists/toggle'
