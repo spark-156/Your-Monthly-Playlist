@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-10 mb-10">
     <v-row>
       <v-col
         cols="12"
@@ -72,8 +72,9 @@
             :disabled="nextButtonDisabled"
             color="green"
             to="/dashboard"
+            large
           >
-            Next
+            NEXT
           </v-btn>
         </v-col>
       </v-row>
