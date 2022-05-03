@@ -71,6 +71,7 @@
           <v-btn
             :disabled="nextButtonDisabled"
             color="green"
+            to="/dashboard"
           >
             Next
           </v-btn>
@@ -85,6 +86,14 @@ import { mapMutations } from 'vuex'
 
 export default {
   name: 'PlaylistPage',
+  beforeRouteLeave (to, _from, next) {
+    if (to.name === 'dashboard') {
+      if (this.selectedPlaylistsCount === 0) {
+        return false
+      }
+    }
+    next()
+  },
   data () {
     return {
       user: this.$auth.user

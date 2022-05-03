@@ -21,15 +21,6 @@
           >
             Log auth
           </v-btn>
-          <v-btn
-            color="primary"
-            elevation="4"
-            rounded
-            x-large
-            @click="getPlaylists"
-          >
-            Log spotifyApi
-          </v-btn>
         </v-container>
       </v-card>
     </v-col>
@@ -39,16 +30,19 @@
 <script>
 export default {
   name: 'DashboardPage',
+  beforeRouteEnter (_to, _from, next) {
+    next((vm) => {
+      if (vm.$store.state.playlists.list.filter(item => item.selected).length === 0) {
+        next('/playlists')
+      }
+    })
+  },
   data () {
     return {
       user: this.$auth.user
     }
   },
   methods: {
-    async getPlaylists () {
-      const response = await this.$spotifyApi.getUserPlaylists(this.$auth.user.id, { limit: 50 })
-      console.log(response)
-    },
     logUser () {
       console.log(this.user)
     },
