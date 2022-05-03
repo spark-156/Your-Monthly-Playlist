@@ -107,11 +107,14 @@ export default {
     playlists () {
       return this.$store.state.playlists.list
     },
+    selectedPlaylistsCount () {
+      return this.$store.state.playlists.list.filter(item => item.selected).length
+    },
     numberOfPlaylistsSelectedString () {
-      return this.grammarString('playlist', this.$store.state.playlists.list.filter(item => item.selected).length)
+      return this.grammarString('playlist', this.selectedPlaylistsCount)
     },
     nextButtonDisabled () {
-      return !this.selectectedPlaylistsCount > 0
+      return !this.selectedPlaylistsCount > 0
     }
   },
   methods: {
