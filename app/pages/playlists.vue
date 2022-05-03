@@ -55,12 +55,27 @@
       </v-col>
     </v-row>
     <v-footer fixed>
-      <v-col
-        class="text-center"
-        cols="12"
+      <v-row
+        align="center"
+        no-gutters
       >
-        {{ selectectedPlaylistsCount }} playlists selected
-      </v-col>
+        <v-col
+          class="text-center"
+        >
+          {{ numberOfPlaylistsSelectedString }} selected
+        </v-col>
+        <v-col
+          cols="auto"
+          align-self="end"
+        >
+          <v-btn
+            :disabled="nextButtonDisabled"
+            color="green"
+          >
+            Next
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-footer>
   </div>
 </template>
@@ -87,18 +102,22 @@ export default {
       return this.$store.state.playlists.hasLoaded
     },
     numberOfPlaylistsString () {
-      let word = 'playlists'
-      if (this.numberOfSongs === 1) { word = 'playlists' }
-      return `${this.$store.state.playlists.amount} ${word}`
+      return this.grammarString('playlist', this.$store.state.playlists.amount)
     },
     playlists () {
       return this.$store.state.playlists.list
     },
-    selectectedPlaylistsCount () {
-      return this.$store.state.playlists.list.filter(item => item.selected).length
+    numberOfPlaylistsSelectedString () {
+      return this.grammarString('playlist', this.$store.state.playlists.list.filter(item => item.selected).length)
+    },
+    nextButtonDisabled () {
+      return !this.selectectedPlaylistsCount > 0
     }
   },
   methods: {
+    grammarString (word, count) {
+      if (count === 1) { return `${count} ${word}` } else { return `${count} ${word}s` }
+    },
     ...mapMutations({
       toggle: 'playlists/toggle',
       refreshPlaylists: 'playlists/refreshPlaylists'
