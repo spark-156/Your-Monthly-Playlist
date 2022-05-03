@@ -54,7 +54,7 @@
         />
       </v-col>
     </v-row>
-    <v-footer fixed>
+    <v-footer fixed class="pa-3">
       <v-row
         align="center"
         no-gutters
