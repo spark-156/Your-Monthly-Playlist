@@ -20,7 +20,7 @@
               color="green"
               @click="refresh"
             >
-              REFRESH
+              CLEAR &amp; REFRESH
             </v-btn>
             <v-btn @click="log">
               DEBUG LOG
@@ -79,7 +79,7 @@
             to="/dashboard"
             large
           >
-            NEXT
+            SHOW MY PLAYLISTS
           </v-btn>
         </v-col>
       </v-row>
@@ -127,7 +127,11 @@ export default {
       return this.$store.state.playlists.loading
     },
     selectedPlaylistsCount () {
-      return this.$store.state.playlists.list.filter(item => item.selected).length
+      let count = this.$store.state.playlists.list.filter(item => item.selected).length
+
+      if (this.$store.state.likedsongs.selected) { count++ }
+
+      return count
     },
     numberOfPlaylistsSelectedString () {
       return this.grammarString('playlist', this.selectedPlaylistsCount)

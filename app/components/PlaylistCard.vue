@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="rounded-lg card"
+    class="rounded-lg green-border"
     :outlined="selected"
     :color="cardColor"
     @mouseover="hover = true"
@@ -123,7 +123,7 @@ export default {
   bottom: 16px;
 }
 
-.card {
+.green-border {
   border-color: #4CAF50 !important;
 }
 </style>

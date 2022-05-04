@@ -1,8 +1,11 @@
 <template>
   <v-card
-    class="rounded-lg card d-flex flex-column"
+    class="rounded-lg card d-flex flex-column green-border"
+    :class="{ card: !selected, 'card-selected': selected }"
+    :outlined="selected"
     :loading="loading"
     height="100%"
+    @click="handleChange"
   >
     <v-card-text>
       <div v-for="song in lastFiveLikedSongs" :key="song.track.id">
@@ -18,7 +21,18 @@
 <script>
 export default {
   name: 'LikedSongs',
+  data () {
+    return {
+      hover: false
+    }
+  },
   computed: {
+    icon () {
+      if (!this.selected) { return 'mdi-plus' } else { return 'mdi-minus' }
+    },
+    selected () {
+      return this.$store.state.likedsongs.selected
+    },
     loading () {
       return this.$store.state.likedsongs.loading
     },
@@ -40,14 +54,31 @@ export default {
     lastLikedSongTrackName () {
       return this.lastLikedSong.track.name
     }
+  },
+  methods: {
+    handleChange () {
+      this.$store.commit('likedsongs/toggle')
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-@import '~vuetify/src/styles/styles.sass';
-
+<style scoped>
 .card {
-  background-image: linear-gradient(to bottom right, #9C27B0, #EA80FC);
+  background-image: linear-gradient(to bottom right, #651FFF, #8C9EFF);
+}
+
+.card-selected {
+  /* bottom right to accent */
+  background-image: linear-gradient(to bottom right, #651FFF, #B9F6CA);
+}
+
+.floating-fab-bottom {
+  bottom: 16px;
+}
+
+.green-border {
+  border-width: 3px;
+  border-color: #4CAF50 !important;
 }
 </style>
