@@ -28,13 +28,12 @@
       </v-col>
 
       <v-col
-        v-if="$fetchState.pending"
         cols="12"
+        sm="6"
+        lg="4"
+        xl="2"
       >
-        <v-progress-circular
-          indeterminate
-          color="primary"
-        />
+        <liked-songs />
       </v-col>
 
       <v-col
@@ -103,13 +102,15 @@ export default {
   async fetch () {
     if (!this.hasLoaded) {
       await this.$store.commit('playlists/getPlaylists')
+      await this.$store.commit('likedsongs/getLikedSongsInit')
     }
   },
   fetchOnServer: false,
   fetchKey: 'playlists',
   computed: {
     hasLoaded () {
-      return this.$store.state.playlists.hasLoaded
+      console.log({ 1: this.$store.state.playlists.hasLoaded, 2: !this.$store.state.likedsongs.loading }, this.$store.state.playlists.hasLoaded && !this.$store.state.likedsongs.loading)
+      return this.$store.state.playlists.hasLoaded && !this.$store.state.likedsongs.loading
     },
     numberOfPlaylistsString () {
       return this.grammarString('playlist', this.$store.state.playlists.amount)
