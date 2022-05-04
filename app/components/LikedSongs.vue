@@ -19,7 +19,6 @@
 export default {
   name: 'LikedSongs',
   computed: {
-
     loading () {
       return this.$store.state.likedsongs.loading
     },
@@ -40,11 +39,6 @@ export default {
     },
     lastLikedSongTrackName () {
       return this.lastLikedSong.track.name
-    }
-  },
-  methods: {
-    log () {
-      console.log(this.lastLikedSong)
     }
   }
 }
