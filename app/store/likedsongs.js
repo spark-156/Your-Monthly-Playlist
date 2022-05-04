@@ -30,6 +30,10 @@ export const mutations = {
     } while (res.next)
     this.commit('likedsongs/setLoading', false)
   },
+  refresh () {
+    this.commit('likedsongs/reset')
+    this.commit('likedsongs/getLikedSongsInit')
+  },
   add (state, item) {
     state.list.push(item)
   },

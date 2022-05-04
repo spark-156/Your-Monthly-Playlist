@@ -1,12 +1,12 @@
 export const state = () => ({
   list: [],
   amount: 0,
-  hasLoaded: false
+  loading: true
 })
 
 export const mutations = {
   async getPlaylists (_state) {
-    this.commit('playlists/setHasLoadedFalse')
+    this.commit('playlists/setLoading', true)
     let res = { next: '/me/playlists?limit=50' }
     do {
       res = await this.$axios.$get(res.next)
@@ -15,13 +15,11 @@ export const mutations = {
       }
     } while (res.next)
     this.commit('playlists/setAmount', res.total)
-    this.commit('playlists/setHasLoadedTrue')
+    this.commit('playlists/setLoading', false)
   },
-  async refreshPlaylists (_state) {
-    this.commit('playlists/setHasLoadedFalse')
-    this.commit('playlists/empty')
-    await this.commit('playlists/getPlaylists')
-    this.commit('playlists/setHasLoadedTrue')
+  refresh () {
+    this.commit('playlists/reset')
+    this.commit('playlists/getPlaylists')
   },
   add (state, playlist) {
     state.list.push({ playlist, selected: false })
@@ -35,13 +33,12 @@ export const mutations = {
   toggle (_state, item) {
     item.selected = !item.selected
   },
-  empty (state) {
+  reset (state) {
+    state.loading = true
     state.list = []
+    state.amount = 0
   },
-  setHasLoadedTrue (state) {
-    state.hasLoaded = true
-  },
-  setHasLoadedFalse (state) {
-    state.hasLoaded = false
+  setLoading (state, boolean) {
+    state.loading = boolean
   }
 }
