@@ -8,9 +8,9 @@
     @click="handleChange"
   >
     <v-card-text>
-      <div v-for="song in lastFiveLikedSongs" :key="song.track.id">
-        {{ song.track.name }}
-      </div>
+      <span v-for="song in lastFiveLikedSongs" :key="song.track.id">
+        <b v-for="artist in song.track.artists">{{ artist.name }}</b> {{ song.track.name }}
+      </span>
     </v-card-text>
     <v-spacer />
     <v-card-title>Liked Songs</v-card-title>
