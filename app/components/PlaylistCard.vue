@@ -1,11 +1,11 @@
 <template>
   <v-card
-    class="rounded-lg green-border"
-    :outlined="selected"
+    class="rounded-lg"
+    :outlined="outlined"
     :color="cardColor"
+    @click="click"
     @mouseover="hover = true"
     @mouseleave="hover = false"
-    @click="handleChange"
   >
     <v-responsive :aspect-ratio="1/1.5">
       <v-container>
@@ -30,9 +30,9 @@
               </v-btn>
             </v-fab-transition>
             <v-img
-              v-if="image"
+              v-if="imageUrl"
               :aspect-ratio="1"
-              :src="image.url"
+              :src="imageUrl"
             />
             <v-icon
               v-else
@@ -73,9 +73,9 @@
 export default {
   name: 'PlaylistComponent',
   props: {
-    selected: {
+    outlined: {
       type: Boolean,
-      required: true
+      default: false
     },
     title: {
       type: String,
@@ -86,7 +86,15 @@ export default {
       required: true
     },
     // eslint-disable-next-line vue/require-default-prop
-    image: Object
+    imageUrl: {
+      type: String,
+      required: false
+    },
+    icon: {
+      type: String,
+      required: true
+    },
+    click: Function
   },
   data () {
     return {
@@ -99,20 +107,12 @@ export default {
       if (this.numberOfSongs === 1) { word = 'song' }
       return `${this.numberOfSongs} ${word}`
     },
-    icon () {
-      if (!this.selected) { return 'mdi-plus' } else { return 'mdi-minus' }
-    },
     cardColor () {
       if (this.hover) {
         return '#303030'
       } else {
         return 'dark'
       }
-    }
-  },
-  methods: {
-    handleChange () {
-      this.$emit('toggleSelected', this.selected)
     }
   }
 }
@@ -121,9 +121,5 @@ export default {
 <style scoped>
 .floating-fab-bottom {
   bottom: 16px;
-}
-
-.green-border {
-  border-color: #4CAF50 !important;
 }
 </style>

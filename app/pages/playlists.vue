@@ -49,10 +49,10 @@
           lg="2"
           xl="1"
         >
-          <playlist-card
+          <selectable-playlist-card
             :title="item.playlist.name"
             :number-of-songs="item.playlist.tracks.total"
-            :image="item.playlist.images[0]"
+            :image-url="getImageUrl(item)"
             :selected="item.selected"
             @toggleSelected="toggle(item)"
           />
@@ -102,14 +102,13 @@ export default {
   },
   data () {
     return {
-      user: this.$auth.user
+      user: this.$auth.user,
+      hasLoaded: false
     }
   },
   async fetch () {
-    if (!this.hasLoaded) {
-      await this.$store.commit('playlists/getPlaylists')
-      await this.$store.commit('likedsongs/getLikedSongsInit')
-    }
+    await this.$store.commit('playlists/getPlaylists')
+    await this.$store.commit('likedsongs/getLikedSongsInit')
   },
   fetchOnServer: false,
   fetchKey: 'playlists',
@@ -155,6 +154,13 @@ export default {
       console.log(this.$store.state.playlists.list.filter(item => item.selected).length)
       console.log(this.$store.state.playlists.list)
       console.log(this.$store.state.playlists.list.filter(item => item.selected))
+    },
+    getImageUrl (item) {
+      try {
+        return item.playlist.images[0].url
+      } catch {
+        return undefined
+      }
     }
   }
 }
