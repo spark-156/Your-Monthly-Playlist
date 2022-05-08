@@ -2,15 +2,15 @@ export const state = () => ({
   list: [],
   amount: 0,
   loading: true,
-  loadingPercentage: 0,
   hasInitialized: false,
-  selected: false
+  selected: false,
+  hasLoaded: false
 })
 
 export const mutations = {
   async getLikedSongsInit (_state) {
     this.commit('likedsongs/setLoading', true)
-    const res = await this.$axios.$get('/me/tracks')
+    const res = await this.$axios.$get('/me/tracks?limit=50')
     this.commit('likedsongs/setAmount', res.total)
     for (const item of res.items) {
       this.commit('likedsongs/add', item)
@@ -18,24 +18,15 @@ export const mutations = {
     this.commit('likedsongs/setLoading', false)
     this.commit('likedsongs/setHasInitialized', true)
   },
-  async getLikedSongs (_state) {
-    this.commit('likedsongs/setLoading', true)
-    let res = { next: '/me/playlists?limit=50' }
-    this.commit('likedsongs/setAmount', res.total)
-    do {
-      res = await this.$axios.$get(res.next)
-      for (const item of res.items) {
-        this.commit('likedsongs/add', item)
-      }
-    } while (res.next)
-    this.commit('likedsongs/setLoading', false)
-  },
   refresh () {
     this.commit('likedsongs/reset')
     this.commit('likedsongs/getLikedSongsInit')
   },
   add (state, item) {
     state.list.push(item)
+  },
+  append (state, items) {
+    state.list = state.list.concat(items)
   },
   setAmount (state, amount) {
     state.amount = amount
@@ -50,7 +41,6 @@ export const mutations = {
     state.loading = true
     state.list = []
     state.amount = 0
-    state.loadingPercentage = 0
     state.hasInitialized = false
     state.selected = false
   },
@@ -59,5 +49,8 @@ export const mutations = {
   },
   setHasInitialized (state, boolean) {
     state.hasInitialized = boolean
+  },
+  setHasLoaded (state, boolean) {
+    state.hasLoaded = boolean
   }
 }
