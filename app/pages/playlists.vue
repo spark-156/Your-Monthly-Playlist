@@ -107,8 +107,12 @@ export default {
     }
   },
   async fetch () {
-    await this.$store.commit('playlists/getPlaylists')
-    await this.$store.commit('likedsongs/getLikedSongsInit')
+    if (!this.$store.state.playlists.hasLoaded) {
+      await this.$store.commit('playlists/getPlaylists')
+    }
+    if (!this.$store.state.likedsongs.hasInitialized) {
+      await this.$store.commit('likedsongs/getLikedSongsInit')
+    }
   },
   fetchOnServer: false,
   fetchKey: 'playlists',
