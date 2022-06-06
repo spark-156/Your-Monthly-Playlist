@@ -8,20 +8,6 @@ export const state = () => ({
 })
 
 export const mutations = {
-  async getLikedSongsInit (_state) {
-    this.commit('likedsongs/setLoading', true)
-    const res = await this.$axios.$get('/me/tracks?limit=50')
-    this.commit('likedsongs/setAmount', res.total)
-    for (const item of res.items) {
-      this.commit('likedsongs/add', item)
-    }
-    this.commit('likedsongs/setLoading', false)
-    this.commit('likedsongs/setHasInitialized', true)
-  },
-  refresh () {
-    this.commit('likedsongs/reset')
-    this.commit('likedsongs/getLikedSongsInit')
-  },
   add (state, item) {
     state.list.push(item)
   },
@@ -52,5 +38,22 @@ export const mutations = {
   },
   setHasLoaded (state, boolean) {
     state.hasLoaded = boolean
+  }
+}
+
+export const actions = {
+  async getLikedSongsInit ({ commit }) {
+    commit('setLoading', true)
+    const res = await this.$axios.$get('/me/tracks?limit=50')
+    commit('setAmount', res.total)
+    for (const item of res.items) {
+      commit('add', item)
+    }
+    commit('setLoading', false)
+    commit('setHasInitialized', true)
+  },
+  refresh ({ commit }) {
+    commit('reset')
+    commit('getLikedSongsInit')
   }
 }

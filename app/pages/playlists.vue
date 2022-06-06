@@ -108,10 +108,10 @@ export default {
   },
   async fetch () {
     if (!this.$store.state.playlists.hasLoaded) {
-      await this.$store.commit('playlists/getPlaylists')
+      await this.$store.dispatch('playlists/getPlaylists')
     }
     if (!this.$store.state.likedsongs.hasInitialized) {
-      await this.$store.commit('likedsongs/getLikedSongsInit')
+      await this.$store.dispatch('likedsongs/getLikedSongsInit')
     }
   },
   fetchOnServer: false,
@@ -148,8 +148,8 @@ export default {
       if (count === 1) { return `${count} ${word}` } else { return `${count} ${word}s` }
     },
     refresh () {
-      this.$store.commit('playlists/refresh')
-      this.$store.commit('likedsongs/refresh')
+      this.$store.dispatch('playlists/refresh')
+      this.$store.dispatch('likedsongs/refresh')
     },
     ...mapMutations({
       toggle: 'playlists/toggle'

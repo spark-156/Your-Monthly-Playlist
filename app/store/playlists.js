@@ -6,23 +6,6 @@ export const state = () => ({
 })
 
 export const mutations = {
-  async getPlaylists (_state) {
-    this.commit('playlists/setLoading', true)
-    let res = { next: '/me/playlists?limit=50' }
-    do {
-      res = await this.$axios.$get(res.next)
-      for (const item of res.items) {
-        this.commit('playlists/add', item)
-      }
-    } while (res.next)
-    this.commit('playlists/setAmount', res.total)
-    this.commit('playlists/setHasLoaded', true)
-    this.commit('playlists/setLoading', false)
-  },
-  refresh () {
-    this.commit('playlists/reset')
-    this.commit('playlists/getPlaylists')
-  },
   add (state, playlist) {
     state.list.push({ playlist, selected: false })
   },
@@ -59,5 +42,25 @@ export const mutations = {
   },
   setHasLoaded (state, boolean) {
     state.hasLoaded = boolean
+  }
+}
+
+export const actions = {
+  refresh ({ commit }) {
+    commit('reset')
+    commit('getPlaylists')
+  },
+  async getPlaylists ({ commit }) {
+    commit('setLoading', true)
+    let res = { next: '/me/playlists?limit=50' }
+    do {
+      res = await this.$axios.$get(res.next)
+      for (const item of res.items) {
+        commit('add', item)
+      }
+    } while (res.next)
+    commit('setAmount', res.total)
+    commit('setHasLoaded', true)
+    commit('setLoading', false)
   }
 }
