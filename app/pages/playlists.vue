@@ -5,7 +5,7 @@
         cols="12"
       >
         <v-card
-          :loading="loading"
+          :loading="$fetchState.pending"
         >
           <v-card-title>Playlists</v-card-title>
           <v-card-subtitle>{{ numberOfPlaylistsString }} found</v-card-subtitle>
@@ -13,19 +13,6 @@
           <v-card-text>
             Please select all the playlists you would like to include in the calculation of your monthly playlists.
           </v-card-text>
-
-          <v-card-actions>
-            <v-btn
-              :loading="!hasLikedSongsAndPlaylistsLoaded"
-              color="green"
-              @click="refresh"
-            >
-              CLEAR &amp; REFRESH
-            </v-btn>
-            <v-btn @click="log">
-              DEBUG LOG
-            </v-btn>
-          </v-card-actions>
         </v-card>
       </v-col>
 
@@ -39,7 +26,7 @@
       </v-col>
 
       <template
-        v-if="!loading"
+        v-if="!$fetchState.pending"
       >
         <v-col
           v-for="(item, i) in playlists"
@@ -100,34 +87,18 @@ export default {
     }
     next()
   },
-  data () {
-    return {
-      user: this.$auth.user,
-      hasLoaded: false
-    }
-  },
   async fetch () {
-    if (!this.$store.state.playlists.hasLoaded) {
-      await this.$store.dispatch('playlists/getPlaylists')
-    }
-    if (!this.$store.state.likedsongs.hasInitialized) {
-      await this.$store.dispatch('likedsongs/getLikedSongsInit')
-    }
+    await Promise.all([this.$store.dispatch('playlists/getPlaylists'),
+      this.$store.dispatch('likedsongs/getLikedSongsInit')])
   },
-  fetchOnServer: false,
+  fetchOnServer: true,
   fetchKey: 'playlists',
   computed: {
-    hasLikedSongsAndPlaylistsLoaded () {
-      return !this.$store.state.playlists.loading && !this.$store.state.likedsongs.loading
-    },
     numberOfPlaylistsString () {
       return this.grammarString('playlist', this.$store.state.playlists.amount)
     },
     playlists () {
       return this.$store.state.playlists.list
-    },
-    loading () {
-      return this.$store.state.playlists.loading
     },
     selectedPlaylistsCount () {
       let count = this.$store.state.playlists.list.filter(item => item.selected).length
@@ -147,18 +118,9 @@ export default {
     grammarString (word, count) {
       if (count === 1) { return `${count} ${word}` } else { return `${count} ${word}s` }
     },
-    refresh () {
-      this.$store.dispatch('playlists/refresh')
-      this.$store.dispatch('likedsongs/refresh')
-    },
     ...mapMutations({
       toggle: 'playlists/toggle'
     }),
-    log () {
-      console.log(this.$store.state.playlists.list.filter(item => item.selected).length)
-      console.log(this.$store.state.playlists.list)
-      console.log(this.$store.state.playlists.list.filter(item => item.selected))
-    },
     getImageUrl (item) {
       try {
         return item.playlist.images[0].url

@@ -89,7 +89,7 @@
 
     <v-main>
       <v-container>
-        <Nuxt />
+        <Nuxt keep-alive />
       </v-container>
     </v-main>
   </v-app>
