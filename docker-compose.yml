@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 
 services:
   traefik:
@@ -36,6 +36,6 @@ services:
       traefik.http.routers.frontend.entrypoints: web
       traefik.http.services.frontend.loadbalancer.server.port: 3000
 
-  redis:
-    container_name: your-spotify-monthly-redis-dev
-    image: redis
+#  redis:
+#    container_name: your-spotify-monthly-redis-dev
+#    image: redis
