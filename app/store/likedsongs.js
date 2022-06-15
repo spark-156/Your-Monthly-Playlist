@@ -1,25 +1,25 @@
 export const state = () => ({
   list: [],
   amount: 0,
-  selected: false
-})
+  selected: false,
+});
 
 export const mutations = {
-  append (state, items) {
-    state.list = state.list.concat(items)
+  append(state, items) {
+    state.list = state.list.concat(items);
   },
-  setAmount (state, amount) {
-    state.amount = amount
+  setAmount(state, amount) {
+    state.amount = amount;
   },
-  toggle (state) {
-    state.selected = !state.selected
-  }
-}
+  toggle(state) {
+    state.selected = !state.selected;
+  },
+};
 
 export const actions = {
-  async getLikedSongsInit ({ commit }) {
-    const res = await this.$axios.$get('/me/tracks?limit=50')
-    commit('setAmount', res.total)
-    commit('append', res.items)
-  }
-}
+  async getLikedSongsInit({ commit }) {
+    const res = await this.$axios.$get("/me/tracks?limit=50");
+    commit("setAmount", res.total);
+    commit("append", res.items);
+  },
+};

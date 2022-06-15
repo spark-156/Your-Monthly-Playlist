@@ -1,7 +1,6 @@
 export const state = () => ({
   loading: true,
-  monthlyPlaylists: {}
-})
+  monthlyPlaylists: {},
+});
 
-export const mutations = {
-}
+export const mutations = {};

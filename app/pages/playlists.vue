@@ -1,33 +1,23 @@
 <template>
   <div class="pb-10 mb-10">
     <v-row>
-      <v-col
-        cols="12"
-      >
-        <v-card
-          :loading="$fetchState.pending"
-        >
+      <v-col cols="12">
+        <v-card :loading="$fetchState.pending">
           <v-card-title>Playlists</v-card-title>
           <v-card-subtitle>{{ numberOfPlaylistsString }} found</v-card-subtitle>
 
           <v-card-text>
-            Please select all the playlists you would like to include in the calculation of your monthly playlists.
+            Please select all the playlists you would like to include in the
+            calculation of your monthly playlists.
           </v-card-text>
         </v-card>
       </v-col>
 
-      <v-col
-        cols="12"
-        sm="6"
-        lg="4"
-        xl="2"
-      >
+      <v-col cols="12" sm="6" lg="4" xl="2">
         <liked-songs />
       </v-col>
 
-      <template
-        v-if="!$fetchState.pending"
-      >
+      <template v-if="!$fetchState.pending">
         <v-col
           v-for="(item, i) in playlists"
           :key="i"
@@ -47,19 +37,11 @@
       </template>
     </v-row>
     <v-footer fixed class="pa-3">
-      <v-row
-        align="center"
-        no-gutters
-      >
-        <v-col
-          class="text-center"
-        >
+      <v-row align="center" no-gutters>
+        <v-col class="text-center">
           {{ numberOfPlaylistsSelectedString }} selected
         </v-col>
-        <v-col
-          cols="auto"
-          align-self="end"
-        >
+        <v-col cols="auto" align-self="end">
           <v-btn
             :disabled="nextButtonDisabled"
             color="green"
@@ -75,59 +57,69 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations } from "vuex";
 
 export default {
-  name: 'PlaylistPage',
-  beforeRouteLeave (to, _from, next) {
-    if (to.name === 'dashboard') {
+  name: "PlaylistPage",
+  beforeRouteLeave(to, _from, next) {
+    if (to.name === "dashboard") {
       if (this.selectedPlaylistsCount === 0) {
-        return false
+        return false;
       }
     }
-    next()
+    next();
   },
-  async fetch () {
-    await Promise.all([this.$store.dispatch('playlists/getPlaylists'),
-      this.$store.dispatch('likedsongs/getLikedSongsInit')])
+  async fetch() {
+    await Promise.all([
+      this.$store.dispatch("playlists/getPlaylists"),
+      this.$store.dispatch("likedsongs/getLikedSongsInit"),
+    ]);
   },
   fetchOnServer: true,
-  fetchKey: 'playlists',
+  fetchKey: "playlists",
   computed: {
-    numberOfPlaylistsString () {
-      return this.grammarString('playlist', this.$store.state.playlists.amount)
+    numberOfPlaylistsString() {
+      return this.grammarString("playlist", this.$store.state.playlists.amount);
     },
-    playlists () {
-      return this.$store.state.playlists.list
+    playlists() {
+      return this.$store.state.playlists.list;
     },
-    selectedPlaylistsCount () {
-      let count = this.$store.state.playlists.list.filter(item => item.selected).length
+    selectedPlaylistsCount() {
+      let count = this.$store.state.playlists.list.filter(
+        (item) => item.selected
+      ).length;
 
-      if (this.$store.state.likedsongs.selected) { count++ }
+      if (this.$store.state.likedsongs.selected) {
+        count++;
+      }
 
-      return count
+      return count;
     },
-    numberOfPlaylistsSelectedString () {
-      return this.grammarString('playlist', this.selectedPlaylistsCount)
+    numberOfPlaylistsSelectedString() {
+      return this.grammarString("playlist", this.selectedPlaylistsCount);
     },
-    nextButtonDisabled () {
-      return !this.selectedPlaylistsCount > 0
-    }
+    nextButtonDisabled() {
+      return !this.selectedPlaylistsCount > 0;
+    },
   },
   methods: {
-    grammarString (word, count) {
-      if (count === 1) { return `${count} ${word}` } else { return `${count} ${word}s` }
+    grammarString(word, count) {
+      if (count === 1) {
+        return `${count} ${word}`;
+      } else {
+        return `${count} ${word}s`;
+      }
     },
     ...mapMutations({
-      toggle: 'playlists/toggle'
+      toggle: "playlists/toggle",
     }),
-    getImageUrl (item) {
+    getImageUrl(item) {
       try {
-        return item.playlist.images[0].url
+        return item.playlist.images[0].url;
       } catch {
-        return undefined
+        return undefined;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
