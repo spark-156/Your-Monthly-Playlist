@@ -3,13 +3,13 @@
     class="rounded-lg card d-flex flex-column green-border"
     :class="{ card: !selected, 'card-selected': selected }"
     :outlined="selected"
-    :loading="loading"
     height="100%"
     @click="handleChange"
   >
     <v-card-text>
       <span v-for="song in lastFiveLikedSongs" :key="song.track.id">
-        <b v-for="artist in song.track.artists">{{ artist.name }}</b> {{ song.track.name }}
+        <b v-for="artist in song.track.artists">{{ artist.name }}</b>
+        {{ song.track.name }}
       </span>
     </v-card-text>
     <v-spacer />
@@ -18,67 +18,53 @@
   </v-card>
 </template>
 
-<script>
-export default {
-  name: 'LikedSongs',
-  data () {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  name: "LikedSongs",
+  data() {
     return {
-      hover: false
-    }
+      hover: false,
+    };
   },
   computed: {
-    icon () {
-      if (!this.selected) { return 'mdi-plus' } else { return 'mdi-minus' }
+    icon() {
+      if (!this.selected) {
+        return "mdi-plus";
+      } else {
+        return "mdi-minus";
+      }
     },
-    selected () {
-      return this.$store.state.likedsongs.selected
+    selected() {
+      return this.$accessor.likedsongs.selected;
     },
-    loading () {
-      return this.$store.state.likedsongs.loading
+    amount() {
+      return this.$accessor.likedsongs.amount;
     },
-    amount () {
-      return this.$store.state.likedsongs.amount
+    lastFiveLikedSongs() {
+      return this.$accessor.likedsongs.list.slice(0, 5);
     },
-    lastFiveLikedSongs () {
-      return this.$store.state.likedsongs.list.slice(0, 5)
-    },
-    lastLikedSong () {
-      return this.$store.state.likedsongs.list[0]
-    },
-    lastLikedSongImage () {
-      return this.lastLikedSong.track.album.images[0]
-    },
-    lastLikedSongAddedDate () {
-      return new Date(this.lastLikedSong.added_at).toLocaleDateString()
-    },
-    lastLikedSongTrackName () {
-      return this.lastLikedSong.track.name
-    }
   },
   methods: {
-    handleChange () {
-      this.$store.commit('likedsongs/toggle')
-    }
-  }
-}
+    handleChange() {
+      this.$accessor.likedsongs.toggle();
+    },
+  },
+});
 </script>
 
 <style scoped>
 .card {
-  background-image: linear-gradient(to bottom right, #651FFF, #8C9EFF);
+  background-image: linear-gradient(to bottom right, #651fff, #8c9eff);
 }
 
 .card-selected {
   /* bottom right to accent */
-  background-image: linear-gradient(to bottom right, #651FFF, #B9F6CA);
-}
-
-.floating-fab-bottom {
-  bottom: 16px;
+  background-image: linear-gradient(to bottom right, #651fff, #b9f6ca);
 }
 
 .green-border {
   border-width: 3px;
-  border-color: #4CAF50 !important;
+  border-color: #4caf50 !important;
 }
 </style>

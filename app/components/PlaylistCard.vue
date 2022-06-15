@@ -7,15 +7,10 @@
     @mouseover="hover = true"
     @mouseleave="hover = false"
   >
-    <v-responsive :aspect-ratio="1/1.5">
+    <v-responsive :aspect-ratio="1 / 1.5">
       <v-container>
         <v-responsive :aspect-ratio="1">
-          <v-avatar
-            class="rounded-lg"
-            tile
-            width="100%"
-            height="100%"
-          >
+          <v-avatar class="rounded-lg" tile width="100%" height="100%">
             <v-fab-transition>
               <v-btn
                 v-show="hover"
@@ -29,34 +24,16 @@
                 <v-icon>{{ icon }}</v-icon>
               </v-btn>
             </v-fab-transition>
-            <v-img
-              v-if="imageUrl"
-              :aspect-ratio="1"
-              :src="imageUrl"
-            />
-            <v-icon
-              v-else
-            >
-              mdi-music
-            </v-icon>
+            <v-img v-if="imageUrl" :aspect-ratio="1" :src="imageUrl" />
+            <v-icon v-else> mdi-music </v-icon>
           </v-avatar>
         </v-responsive>
       </v-container>
-      <v-tooltip
-        bottom
-        open-on-hover
-        open-delay="1000"
-      >
+      <v-tooltip bottom open-on-hover open-delay="1000">
         <template #activator="{ on, attrs }">
-          <div
-            v-bind="attrs"
-            v-on="on"
-          >
+          <div v-bind="attrs" v-on="on">
             <v-card-title>
-              <div
-                class="text-truncate"
-                style="max-width: 100%;"
-              >
+              <div class="text-truncate" style="max-width: 100%">
                 {{ title }}
               </div>
             </v-card-title>
@@ -69,53 +46,56 @@
   </v-card>
 </template>
 
-<script>
-export default {
-  name: 'PlaylistComponent',
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  name: "PlaylistComponent",
   props: {
     outlined: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
     numberOfSongs: {
       type: Number,
-      required: true
+      required: true,
     },
-    // eslint-disable-next-line vue/require-default-prop
     imageUrl: {
       type: String,
-      required: false
+      required: false,
+      default: undefined,
     },
     icon: {
       type: String,
-      required: true
+      required: true,
     },
-    click: Function
+    click: Function,
   },
-  data () {
+  data() {
     return {
-      hover: false
-    }
+      hover: false,
+    };
   },
   computed: {
-    numberOfSongsString () {
-      let word = 'songs'
-      if (this.numberOfSongs === 1) { word = 'song' }
-      return `${this.numberOfSongs} ${word}`
-    },
-    cardColor () {
-      if (this.hover) {
-        return '#303030'
-      } else {
-        return 'dark'
+    numberOfSongsString() {
+      let word = "songs";
+      if (this.numberOfSongs === 1) {
+        word = "song";
       }
-    }
-  }
-}
+      return `${this.numberOfSongs} ${word}`;
+    },
+    cardColor() {
+      if (this.hover) {
+        return "#303030";
+      } else {
+        return "dark";
+      }
+    },
+  },
+});
 </script>
 
 <style scoped>

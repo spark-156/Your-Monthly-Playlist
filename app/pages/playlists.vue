@@ -13,11 +13,11 @@
         </v-card>
       </v-col>
 
-      <v-col cols="12" sm="6" lg="4" xl="2">
-        <liked-songs />
-      </v-col>
-
       <template v-if="!$fetchState.pending">
+        <v-col cols="12" sm="6" lg="4" xl="2">
+          <liked-songs />
+        </v-col>
+
         <v-col
           v-for="(item, i) in playlists"
           :key="i"
@@ -43,7 +43,7 @@
         </v-col>
         <v-col cols="auto" align-self="end">
           <v-btn
-            :disabled="nextButtonDisabled"
+            :disabled="!nextButtonDisabled"
             color="green"
             to="/dashboard"
             large
@@ -56,14 +56,17 @@
   </div>
 </template>
 
-<script>
-import { mapMutations } from "vuex";
-
-export default {
+<script lang="ts">
+import Vue from "vue";
+import { Playlist } from "~/types/Playlist";
+import { accessorType } from "~/store";
+import { createMapper } from "typed-vuex";
+const mapper = createMapper(accessorType);
+export default Vue.extend({
   name: "PlaylistPage",
   beforeRouteLeave(to, _from, next) {
     if (to.name === "dashboard") {
-      if (this.selectedPlaylistsCount === 0) {
+      if (this.selectedAmount === 0) {
         return false;
       }
     }
@@ -71,49 +74,48 @@ export default {
   },
   async fetch() {
     await Promise.all([
-      this.$store.dispatch("playlists/getPlaylists"),
-      this.$store.dispatch("likedsongs/getLikedSongsInit"),
+      this.$accessor.playlists.getPlaylists(),
+      this.$accessor.likedsongs.getLikedSongsInit(),
     ]);
   },
   fetchOnServer: true,
   fetchKey: "playlists",
   computed: {
-    numberOfPlaylistsString() {
+    numberOfPlaylistsString(): string {
       return this.grammarString("playlist", this.$store.state.playlists.amount);
     },
-    playlists() {
-      return this.$store.state.playlists.list;
+    playlists(): Playlist[] {
+      return this.$accessor.playlists.list;
     },
-    selectedPlaylistsCount() {
-      let count = this.$store.state.playlists.list.filter(
-        (item) => item.selected
-      ).length;
+    selectedAmount(): number {
+      let count = this.$accessor.playlists.selectedPlaylistAmount;
 
-      if (this.$store.state.likedsongs.selected) {
+      if (this.$accessor.likedsongs.selected) {
         count++;
       }
 
       return count;
     },
-    numberOfPlaylistsSelectedString() {
-      return this.grammarString("playlist", this.selectedPlaylistsCount);
+    numberOfPlaylistsSelectedString(): string {
+      return this.grammarString("playlist", this.selectedAmount);
     },
-    nextButtonDisabled() {
-      return !this.selectedPlaylistsCount > 0;
+    nextButtonDisabled(): boolean {
+      const amount = this.selectedAmount;
+      return amount > 0;
     },
   },
   methods: {
-    grammarString(word, count) {
+    grammarString(word: string, count: number) {
       if (count === 1) {
         return `${count} ${word}`;
       } else {
         return `${count} ${word}s`;
       }
     },
-    ...mapMutations({
-      toggle: "playlists/toggle",
-    }),
-    getImageUrl(item) {
+    toggle(playlist: Playlist) {
+      return this.$accessor.playlists.toggle(playlist);
+    },
+    getImageUrl(item: Playlist) {
       try {
         return item.playlist.images[0].url;
       } catch {
@@ -121,5 +123,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

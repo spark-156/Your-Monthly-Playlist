@@ -10,43 +10,48 @@
   />
 </template>
 
-<script>
-export default {
-  name: 'SelectablePlaylistCard',
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  name: "SelectablePlaylistCard",
   props: {
     selected: {
       type: Boolean,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
     numberOfSongs: {
       type: Number,
-      required: true
+      required: true,
     },
-    // eslint-disable-next-line vue/require-default-prop
     imageUrl: {
       type: String,
-      required: false
-    }
+      required: false,
+      default: undefined,
+    },
   },
   computed: {
-    icon () {
-      if (!this.selected) { return 'mdi-plus' } else { return 'mdi-minus' }
-    }
+    icon() {
+      if (!this.selected) {
+        return "mdi-plus";
+      } else {
+        return "mdi-minus";
+      }
+    },
   },
   methods: {
-    handleChange () {
-      this.$emit('toggleSelected', this.selected)
-    }
-  }
-}
+    handleChange() {
+      this.$emit("toggleSelected", this.selected);
+    },
+  },
+});
 </script>
 
 <style scoped>
 .green-border {
-  border-color: #4CAF50 !important;
+  border-color: #4caf50 !important;
 }
 </style>
